@@ -16,7 +16,6 @@ Matrix::Matrix(const Matrix &other) : s{other.s}, data{new float[s.n * s.m]}
 }
 Matrix::~Matrix() {delete[] data;}
 
-
 float * Matrix::operator[](int i) {return &data[s.n * i];}
 
 Matrix Matrix::operator*=(const Matrix &rhs)
@@ -85,24 +84,9 @@ void Matrix::print()
 
 
 int Matrix::size() {return s.m * s.n;}
-
 float Matrix::getVal(int i, int j) const {return data[j + s.n * i];}
-
 Shape Matrix::shape() const {return s;}
 
-// Highest entry in the matrix, by absolute value
-float Matrix::absMax() const
-{
-    float m = 0;
-    for (int i = 0; i < shape().m; i++)
-    {
-        for (int j = 0; j < shape().n; j++)
-        {
-            if (abs(getVal(i, j)) > m){m = abs(getVal(i, j));}
-        }
-    }
-    return m;
-}
 
 Matrix Matrix::T() const
 {

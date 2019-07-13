@@ -1,0 +1,26 @@
+\documentclass{article}
+
+\usepackage{bbold}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{xparse}
+
+\lstset{language=C,keywordstyle={\bfseries \color{blue}}}
+\NewDocumentCommand{\codeword}{v}{%
+\texttt{\textcolor{blue}{#1}}%
+}
+
+
+\title{AI lmao}
+\author{Martin Johnsrud}
+
+\begin{document}
+
+    \maketitle
+
+    \input{datastructure}
+
+    \input{gradien_decent}
+
+\end{document}

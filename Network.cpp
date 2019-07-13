@@ -23,7 +23,7 @@ Matrix f(Matrix x)
     {
         for (int j = 0; j < x.shape().n; j++)
         {
-            x = 1 / (1 + exp(-x[i][j]))
+            x = 1 / (1 + exp(-x[i][j]));
         }
     }
     return x;

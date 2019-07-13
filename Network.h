@@ -17,7 +17,6 @@ class Layer
 }   
 
 
-
 // Free functions
 //
 // Functions used by the network, layers, or other related functions

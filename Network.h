@@ -11,11 +11,11 @@ class Layer
 
         Layer * next;
 
-        // void updateLayer(Layer * former);
+        void updateLayer(Layer * former);
 
     public:
         Layer(int n, int m, Layer * next = nullptr);
-}   
+};
 
 
 class Network
@@ -27,7 +27,7 @@ class Network
 
     public:
         Network(Matrix L);
-}
+};
 
 // Free functions
 //

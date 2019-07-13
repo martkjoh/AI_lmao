@@ -1,2 +1,7 @@
 \section*{Gradient decent}
-The cost function, $C$, is dependent on the weights $W_i \in  \mathbb{R}^{L_i \times L_{i-1}} $, biases $b_i \in \mathbb{R}^{L_i}$, and the activation $a_i\in \mathbb{R}^{L_i}$ the neurons of each layer, where $ i \in \{0, ..., \,l-1\}$, and $L_{-1} = L_0$ is the length of the input data.
+The cost function, $C$, is dependent on the disiered output $y$ given a output, an on  the weights $W^{(i)} \in  \mathbb{R}^{L_i \times L_{i-1}} $, biases $b^{(i)} \in \mathbb{R}^{L_i}$, and the activation $a^(i) \in \mathbb{R}^{L_i}$ of the neurons of each layer, where $ i \in \{0, ..., \,l-1\}$, and $L_{-1} = L_0$ is the length of the input data. It is given by
+
+$$
+    C = \sum_{j - 0}^{L_i - 1} \big(y_j - a^{(l - 1)}_j\big)^2.
+$$
+

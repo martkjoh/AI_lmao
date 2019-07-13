@@ -9,13 +9,25 @@ class Layer
         Matrix biases;
         Matrix weights;
 
-        void updateLayer(Layer former);
+        Layer * next;
+
+        // void updateLayer(Layer * former);
 
     public:
-        Layer(int n, int m);
-
+        Layer(int n, int m, Layer * next = nullptr);
 }   
 
+
+class Network
+{
+    private:
+        Layer * input;
+        Layer * output;
+        Matrix L;
+
+    public:
+        Network(Matrix L);
+}
 
 // Free functions
 //

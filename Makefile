@@ -8,10 +8,10 @@ OBJS  = *.o
 IMFLAGS = `Magick++-config --cppflags --cxxflags --ldflags --libs`
 
 $(EXECUTABLE): $(OBJS)
-	$(CXX) $(IMFLAGS) $(OBJS) -o $(EXECUTABLE) 
+	$(CXX) $(OBJS) -o $(EXECUTABLE) 
 
 $(OBJS): $(SRCS)
-	$(CXX) $(SRCS) $(IMFLAGS) -c $< 
+	$(CXX) $(SRCS) -c
 
 clean:
 	$(RM) $(OBJS)

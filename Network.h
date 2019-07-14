@@ -2,7 +2,7 @@
 
 class Layer
 {
-    private:
+    protected:
         // n is neurons in current layer, m is in the former
         int n, m;
         Matrix neurons;
@@ -11,14 +11,24 @@ class Layer
 
         Layer * next;
 
-        void updateLayer(Layer * former);
-
     public:
         Layer(int n, int m, Layer * next = nullptr);
+        Layer(int n, int m, Layer * next, bool in);
+
+        void updateLayer(Layer * former);
+
+        Layer * getNext() const {return next;}
+        int width() const {return n;}
+        float getVal(int j) {return neurons[j][0];}
+        Matrix getVals() {return neurons;}
+        void printLayer();
+
+        void setNeurons(Matrix data);
+
 };
 
 
-class Network
+class NeuralNet
 {
     private:
         Layer * input;
@@ -26,11 +36,15 @@ class Network
         Matrix L;
 
     public:
-        Network(Matrix L);
+    // TODO: Make destructor, there is going to be sooooo much memory leak
+        NeuralNet(Matrix L);
+
+        void printNet() const;
+        Matrix activate(Matrix data);
 };
 
 // Free functions
 //
-// Functions used by the network, layers, or other related functions
+// Functions used by the NeuralNet, layers, or other related functions
 
 Matrix f(Matrix x);

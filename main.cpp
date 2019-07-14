@@ -2,12 +2,18 @@
 
 int main()
 {
-    Matrix L{4, 1, 5}; 
-    for (int i = 0; i < 1e7; i++)
-    {
-        L = rand(4, 1);
-        NeuralNet N{L};  
-    }
+    // srand (time(NULL));
+    float d[4] = {
+        2,
+        1
+    };
 
+    Matrix L{2, 1, d};
+
+    NeuralNet N(L);  
+
+    Matrix in = rand(4, 1);
+    N.activate(in);
+    // N.printNet();
     return 0;
 }

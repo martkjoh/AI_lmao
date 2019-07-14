@@ -4,7 +4,7 @@
 using namespace std;
 
 Layer::Layer(int n, int m, Layer * next) : 
-    n{n}, m{m}, next{next}, neurons{n, 1}, biases{rand(n, 1)}, weights{rand(m, n)} {}
+    n{n}, m{m}, next{next}, neurons{n, 1}, biases{rand(n, 1)}, weights{rand(n, m)} {}
 
 Layer::Layer(int n, int m, Layer * next, bool in) : Layer(n, m, next)
 {
@@ -13,18 +13,22 @@ Layer::Layer(int n, int m, Layer * next, bool in) : Layer(n, m, next)
 
 void Layer::updateLayer(Layer * former)
 {
-    neurons = f((weights * former->neurons) + biases);
+    Matrix s(weights * former->neurons);
+    weights.print();
+    former->neurons.print();
+    (weights * former->neurons).print();
+    neurons = f(s + biases);
 }
 
 void Layer::printLayer()
 {
+    cout << "weights:" << endl;
     weights.print();
-    for (int i = 0; i < width(); i++)
-    {
-        cout << getVal(i) << ", " << biases[i][0] << endl;
-    }
+    cout << "activation" << endl;
+    neurons.print();
+    cout << "bias" << endl;
+    biases.print();
 }
-
 
 void Layer::setNeurons(Matrix data)
 {
@@ -72,12 +76,11 @@ void NeuralNet::printNet() const
 
 Matrix NeuralNet::activate(Matrix data)
 {
-
     input->setNeurons(data);
     Layer * last = input;
     Layer * current = input->getNext();
     do{
-        current->updateLayer(current);
+        current->updateLayer(last);
         last = current;
         current = last->getNext();
     }

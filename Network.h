@@ -5,6 +5,7 @@ class Layer
     protected:
         // n is neurons in current layer, m is in the former
         int n, m;
+        
         Matrix neurons;
         Matrix biases;
         Matrix weights;
@@ -12,6 +13,7 @@ class Layer
         Layer * next;
 
     public:
+
         Layer(int n, int m, Layer * next = nullptr);
         Layer(int n, int m, Layer * next, bool in);
 
@@ -31,9 +33,10 @@ class Layer
 class NeuralNet
 {
     private:
-        Layer * input;
-        Layer * output;
         Matrix L;
+
+        Layer * output;
+        Layer * input;
 
     public:
         NeuralNet(Matrix L);
@@ -42,6 +45,7 @@ class NeuralNet
         void printNet() const;
         Matrix activate(Matrix data);
 };
+
 
 // Free functions
 //

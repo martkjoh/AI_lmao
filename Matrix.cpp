@@ -24,7 +24,11 @@ float * Matrix::operator[](int i) {return &data[s.n * i];}
 
 Matrix Matrix::operator*=(const Matrix &rhs)
 {
-    if (this->s.n != rhs.s.m) {throw "incompatible dimensions";}
+    if (this->s.n != rhs.s.m) 
+    {
+        cout << "incompatible dimensions" << endl;
+        throw 1;
+    }
 
     Matrix A(this->s.m, rhs.s.n);
     float s;
@@ -33,7 +37,7 @@ Matrix Matrix::operator*=(const Matrix &rhs)
         for (int j = 0; j < rhs.s.n; j++)
         {
             s = 0;
-            for (int k = 0; k < this->s.m; k++) 
+            for (int k = 0; k < this->s.n; k++) 
             {
                 s += this->getVal(i, k) * rhs.getVal(k, j);
             }
@@ -45,7 +49,12 @@ Matrix Matrix::operator*=(const Matrix &rhs)
 
 Matrix Matrix::operator+= (const Matrix &rhs)
 {
-    if (!(this->shape() == rhs.shape())) {throw "Incompatible dimensions";}
+    if (!(this->shape() == rhs.shape()))
+    {
+        cout << "incompatible dimensions" << endl;
+        throw 1;
+    }
+
     for (int i = 0; i < s.m; i++)
     {
         for (int j = 0; j < s.n; j++) {(*this)[i][j] += rhs.getVal(i, j);}
@@ -79,7 +88,7 @@ void Matrix::print()
     {
         for (int j = 0; j < s.n; j++)
         {
-            cout << setw(5) << left << setprecision(3) << (*this)[i][j] << " ";
+            cout << setw(7) << left << setprecision(5) << (*this)[i][j] << " ";
         }
         cout << "\n";
     }

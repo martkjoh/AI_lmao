@@ -5,43 +5,24 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "g++.exe build active file",
-            "windows":
-            {
-                "command": "cd",
-                "args": [
-                    "${fileDirname}",
-                    "&&",
-                    "g++",
-                    "*.cpp",
-                    "-o",
-                    "fil.exe",
-                    "&&",
-                    "fil.exe",
-        
-                ],
-            },
-            "linux":
-            {
-                "command": "cd",
-                "args": [
-                    "${fileDirname}",
-                    "&&",
-                    "g++",
-                    "*.cpp",
-                    "-o",
-                    "fil",
-                    "&&",
-                    "./fil",
-                ]
-            },
-            "problemMatcher": [
-                "$gcc"
+            "label": "g++ build active file",
+            "command": "cd",
+            "args": [
+                "${workspaceFolder}",
+                "&&",
+                "make",
+                "clean",
+                "&&",
+                "make",
+                "run"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": [
+                "$eslint-compact"
+            ]
         }
     ]
 }

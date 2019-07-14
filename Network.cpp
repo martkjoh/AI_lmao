@@ -48,12 +48,13 @@ NeuralNet::NeuralNet(Matrix L) : L{L}, output{new Layer{(int)L[L.shape().m - 1][
 NeuralNet::~NeuralNet()
 {
     Layer * current = input;
-    Layer * next = current.getNext();
+    Layer * next = current->getNext();
     do{
+        delete current;
         current = next;
-        next = current.getNext();
+        next = current->getNext();
     }
-    while (next != nullptr)
+    while (next != nullptr);
     delete current;
 }
 

@@ -1,6 +1,6 @@
 CXX = g++
 
-EXECUTABLE = fil
+EXECUTABLE = main
 
 SRCS = *.cpp
 OBJS  = *.o

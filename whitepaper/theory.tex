@@ -1,0 +1,32 @@
+\section*{Theory}
+A neural network is made up of $l$ layers, where the $i$th layer, $i \in \{1, ..., l\}$, has $L_i$ neurons. 
+Each neuron $j$ has a bias $b^{(i)}_j$ and an activation $a^{(i)}_j$. The activation of the neurons is a function of the activation of the neurons in layer $i - 1$. 
+A weighted sum 
+
+$$
+    z^{(i)}_j = \sum_{k = 0}^{L_i} w^{(i)}_{jk} a^{(i - 1)}_k + b_j
+$$
+%
+is passed through an activation function, in this case
+%
+$$
+    f(x) = \frac{1}{1 + \exp(-x)}.
+$$
+%
+The activation of a neurons then becomes
+%
+$$
+    a^{(i)}_{j} = f\big(w^{(i)}_{jk} a^{(i - 1)}_k + b_j \big),
+$$
+%
+using einstein summation. This means layer $i$ is associated with a matrix $w^{(i)} \in \mathbb{R}^{L_i \times L_{i-1}}$. In the special case of 
+
+$i = 0$ is the activation of the neurons given by an input vector $x \in \mathbb{R}^{L_0}$, and there are no need for wights of biases.
+
+With each input $x$ is there a desired outputvector $y \in \mathbb{R}^{L_{l}}$, wich is compared to the activation of the last layer $a^{(l)}$, by the cost function
+%
+$$
+    C = \big(y_j - a^{(l)}_j\big)^2.
+$$
+%
+The goal is to train the neural network, by using gradient decent to minimize C. C is a function of all the weights $w^{(i)}_{jk}$, the biases $b^{(i)}_j$ and the activations $a^{(i)}_j$ given an input $x$. To find all partial derivatives, back propagation is emploied.

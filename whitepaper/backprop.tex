@@ -1,0 +1,22 @@
+\section*{Back propagation}
+The partial derivatives of the cost function with respect to the weights in the last layer is given by
+$$
+    \frac{\partial C}{\partial w^{(l)}_{jk}} = \frac{\partial C}{\partial a^{(l)}_{j}} 
+    \frac{\partial a^{(l)}_{j}}{\partial z^{(l)}_{j}} \frac{\partial z^{(l)}_{j}}{\partial w^{(i)}_{jk}}.
+$$
+We have
+$$
+    \frac{\partial C}{\partial a^{(l)}_{j}} = 2(a^{(l)}_{j} - y_j) 
+$$
+$$
+    \frac{\partial a^{(l)}_{j}}{\partial z^{(l)}_{j}} = \frac{\partial f}{\partial x} = \frac{-\exp(x)}{(\exp(x) + 1)^2}
+$$
+$$
+\frac{\partial z^{(l)}_{j}}{\partial w^{(i)}_{jk}} = \sum_{k = 1}^{L_l}a^{(l - 1)}_k,
+$$
+giving us this parital derivative. For subsequent layers, the derivative with respect to the activation is given by
+$$
+    \frac{\partial C}{\partial a^{(i - 1)}_{j}} = \sum_{k = 1}^{L_j}\frac{\partial C}{\partial a^{(i)}_{k}} 
+    \frac{\partial a^{(i)}_{k}}{\partial z^{(i)}_{k}} \frac{\partial z^{(i)}_{k}}{\partial a^{(i -1)}_{k}}.
+$$
+This can be calculated recursively.

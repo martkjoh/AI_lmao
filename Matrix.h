@@ -24,7 +24,7 @@ class Matrix
     public:
         Matrix(Shape s, float fill = 0);
         Matrix(int m, int n, float fill = 0);
-        Matrix(int m, int n, float* data);
+        Matrix(int m, int n, float * d);
         Matrix();
         Matrix(const Matrix &other);
         ~Matrix();
@@ -46,17 +46,10 @@ class Matrix
 };
 
 
-
-// Helper functions for matrices
-//
-// Functions to use on matrices for manipulation, analysis etc...
-
-// Opperators to use on Matrices
+// Opperators and functions to use on Matrices
 
 Matrix operator* (Matrix lhs, const Matrix &rhs);
 Matrix operator+ (Matrix lhs, const Matrix &rhs);
 Matrix operator- (Matrix lhs, const Matrix &rhs);
-
-
 
 Matrix rand(int M, int N, float min = 0, float max = 1);

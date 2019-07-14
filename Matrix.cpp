@@ -1,22 +1,23 @@
 #include "Matrix.h"
 
-
-Matrix::Matrix(Shape s, float fill) : s{s},  data{new float[s.n * s.m]}
-{
-    for (int i = 0; i < size(); i++) {data[i] = fill;}
-}
-
 Matrix::Matrix(int m, int n, float fill) : Matrix{Shape{m, n}, fill} {}
-Matrix::Matrix(int m, int n, float* data) : s{m, n} {swap(this->data, data);}
-Matrix::Matrix() : Matrix(0, 0) {}
-
-Matrix::Matrix(const Matrix &other) : s{other.s}, data{new float[s.n * s.m]}
+Matrix::Matrix(int m, int n, float * d) : s{m, n}, data{new float[s.n * s.m]} 
 {
-    for (int i = 0; i < size(); i++) {data[i] = other.data[i];}
+    for (int i = 0; i < m; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            data[i * n + j] = d[i * n + j];
+        }
+    }
 }
 
-// TODO: Find the wierd memory bug here...
-// TODO: When given an array, destructor will caus bug
+Matrix::Matrix() : Matrix(0, 0) {}
+Matrix::Matrix(Shape s, float fill) : s{s},  data{new float[s.n * s.m]}
+    {for (int i = 0; i < size(); i++) {data[i] = fill;}}
+Matrix::Matrix(const Matrix &other) : s{other.s}, data{new float[s.n * s.m]}
+    {for (int i = 0; i < size(); i++) {data[i] = other.data[i];}}
+
 Matrix::~Matrix() {delete[] data;}
 
 float * Matrix::operator[](int i) {return &data[s.n * i];}
@@ -85,11 +86,9 @@ void Matrix::print()
     cout << endl;
 }
 
-
 int Matrix::size() {return s.m * s.n;}
 float Matrix::getVal(int i, int j) const {return data[j + s.n * i];}
 Shape Matrix::shape() const {return s;}
-
 
 Matrix Matrix::T() const
 {

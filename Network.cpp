@@ -34,6 +34,7 @@ void Layer::setNeurons(Matrix data)
 
 // NeuralNet
 
+// TODO: Clean up this mess
 NeuralNet::NeuralNet(Matrix L) : L{L}, output{new Layer{(int)L[L.shape().m - 1][0], (int)L[L.shape().m - 2][0]}}
 {
     Layer * current = output;

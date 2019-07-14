@@ -1,4 +1,4 @@
-t#include "Matrix.h"
+#include "Matrix.h"
 
 
 Matrix::Matrix(Shape s, float fill) : s{s},  data{new float[s.n * s.m]}
@@ -14,6 +14,9 @@ Matrix::Matrix(const Matrix &other) : s{other.s}, data{new float[s.n * s.m]}
 {
     for (int i = 0; i < size(); i++) {data[i] = other.data[i];}
 }
+
+// TODO: Find the wierd memory bug here...
+// TODO: When given an array, destructor will caus bug
 Matrix::~Matrix() {delete[] data;}
 
 float * Matrix::operator[](int i) {return &data[s.n * i];}

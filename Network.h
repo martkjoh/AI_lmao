@@ -36,8 +36,8 @@ class NeuralNet
         Matrix L;
 
     public:
-    // TODO: Make destructor, there is going to be sooooo much memory leak
         NeuralNet(Matrix L);
+        ~NeuralNet();
 
         void printNet() const;
         Matrix activate(Matrix data);

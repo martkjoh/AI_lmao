@@ -45,6 +45,18 @@ NeuralNet::NeuralNet(Matrix L) : L{L}, output{new Layer{(int)L[L.shape().m - 1][
     input = new Layer{(int)L[0][0], (int)L[0][0], current, true};
 }
 
+NeuralNet::~NeuralNet()
+{
+    Layer * current = input;
+    Layer * next = current.getNext();
+    do{
+        current = next;
+        next = current.getNext();
+    }
+    while (next != nullptr)
+    delete current;
+}
+
 void NeuralNet::printNet() const
 {
     Layer * current = input;

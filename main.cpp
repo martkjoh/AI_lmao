@@ -4,22 +4,22 @@ int main()
 {
     // srand (time(NULL));
     float d[] = {
+        3,
         4,
-        2,
-        2,
-        1
+        2
     };
 
     float d2[] = {
-        1
+        1,
+        0
     };
 
-    Matrix L{4, 1, d};
+    Matrix L{3, 1, d};
 
     NeuralNet N(L);  
 
-    Matrix in = rand(4, 1);
-    Matrix y(1, 1, d2);
+    Matrix in = rand(3, 1);
+    Matrix y(2, 1, d2);
     N.activate(in);
     N.printNet();
     cout << C(N.getOutput(), y);

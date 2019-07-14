@@ -103,5 +103,5 @@ Matrix f(Matrix x)
 float C(Matrix a, Matrix y)
 {
     Matrix d = a - y;
-    return (d * d)[0][0];
+    return (d.T() * d)[0][0] / d.shape().m;
 }

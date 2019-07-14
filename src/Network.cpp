@@ -1,5 +1,6 @@
 #include <cmath>
-#include "Network.h"
+#include "../header/Network.h"
+
 
 using namespace std;
 

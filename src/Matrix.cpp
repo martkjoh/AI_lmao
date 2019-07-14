@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "../header/Matrix.h"
 
 Matrix::Matrix(int m, int n, float fill) : Matrix{Shape{m, n}, fill} {}
 Matrix::Matrix(int m, int n, float * d) : s{m, n}, data{new float[s.n * s.m]} 

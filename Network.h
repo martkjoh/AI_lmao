@@ -44,6 +44,7 @@ class NeuralNet
 
         void printNet() const;
         Matrix activate(Matrix data);
+        Matrix getOutput() {return output->getVals();}
 };
 
 
@@ -52,3 +53,4 @@ class NeuralNet
 // Functions used by the NeuralNet, layers, or other related functions
 
 Matrix f(Matrix x);
+float C(Matrix a, Matrix y);

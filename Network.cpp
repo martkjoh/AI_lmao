@@ -13,11 +13,7 @@ Layer::Layer(int n, int m, Layer * next, bool in) : Layer(n, m, next)
 
 void Layer::updateLayer(Layer * former)
 {
-    Matrix s(weights * former->neurons);
-    weights.print();
-    former->neurons.print();
-    (weights * former->neurons).print();
-    neurons = f(s + biases);
+    neurons = f(weights * former->neurons + biases);
 }
 
 void Layer::printLayer()
@@ -102,4 +98,10 @@ Matrix f(Matrix x)
         }
     }
     return x;
+}
+
+float C(Matrix a, Matrix y)
+{
+    Matrix d = a - y;
+    return (d * d)[0][0];
 }

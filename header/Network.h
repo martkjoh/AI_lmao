@@ -36,13 +36,14 @@ class Layer
 class NeuralNet
 {
     private:
-        Matrix L;
+        int * L;
+        int l;
 
         Layer * output;
         Layer * input;
 
     public:
-        NeuralNet(Matrix L);
+        NeuralNet(int * L, int l);
         ~NeuralNet();
 
         void printNet() const;

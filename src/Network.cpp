@@ -35,18 +35,18 @@ void Layer::setNeurons(Matrix data)
 
 // NeuralNet
 
-// TODO: Clean up this mess
-NeuralNet::NeuralNet(Matrix L) : L{L}, output{new Layer{(int)L[L.shape().m - 1][0], (int)L[L.shape().m - 2][0]}}
+
+NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, output{new Layer{L[l - 1], L[l - 2]}}
 {
     Layer * current = output;
     Layer * next = nullptr;
-    for (int i = 1; i < L.shape().m - 1; i++)
+    for (int i = 1; i < l - 1; i++)
     {
-        Layer * next = new Layer{(int)L[L.shape().m - 1 - i][0], (int)L[L.shape().m - 2 - i][0], current};
+        next = new Layer{L[l - 1 - i], L[l - 2 - i], current};
         next->setLast(current);
         current = next;
     }
-    input = new Layer{(int)L[0][0], (int)L[0][0], current, true};
+    input = new Layer{L[0], L[0], current, true};
     input->setLast();
 }
 

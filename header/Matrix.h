@@ -34,17 +34,19 @@ class Matrix
         Matrix operator- ();
         Matrix operator*= (const Matrix &rhs);
         Matrix operator= (Matrix rhs);
-        float * operator[](int i);
+        virtual float * operator[](int i);
 
 
         void print();
         int size();
         float getVal(int i, int j) const;
         Shape shape() const;
+        int m() {return s.m;}
+        int n() {return s.n;}
         float absMax() const;
+        int getInt(int i, int j = 0) {return (int)getVal(i, j);}
         Matrix T() const;
 };
-
 
 // Opperators and functions to use on Matrices
 

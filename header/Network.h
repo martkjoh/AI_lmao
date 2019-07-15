@@ -11,6 +11,7 @@ class Layer
         Matrix weights;
 
         Layer * next;
+        Layer * last;
 
     public:
 
@@ -20,6 +21,8 @@ class Layer
         void updateLayer(Layer * former);
 
         Layer * getNext() const {return next;}
+        Layer * getLast() const {return last;}
+        void setLast(Layer * last = nullptr) {this->last = last;}
         int width() const {return n;}
         float getVal(int j) {return neurons[j][0];}
         Matrix getVals() {return neurons;}

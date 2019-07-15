@@ -2,7 +2,7 @@ CXX = g++
 
 EXECUTABLE = fil
 
-SRCS = src/*.cpp
+SRCS = src/*.cpp *.cpp
 HEAD = header/*.h
 OBJS  = *.o
 
@@ -12,7 +12,7 @@ $(EXECUTABLE): $(OBJS)
 	$(CXX) $(OBJS) -o $(EXECUTABLE) 
 
 $(OBJS): $(SRCS) $(HEAD)
-	$(CXX) main.cpp $(SRCS) -c $<
+	$(CXX) $(SRCS) -c $<
 
 clean:
 	$(RM) $(OBJS)

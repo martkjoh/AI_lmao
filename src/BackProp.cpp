@@ -40,28 +40,23 @@ DelVec Del::backProp(NeuralNet & net, Matrix * y)
 {
     DelVec delta = DelVec(net);
     Layer * current(net.output);
-    Layer * last(current->getLast());
-    // ! something goes wrong here
-    last->getLast();
+    Layer * next;
     cout << 1;
     delta[l - 1 + l] = dC(current->a(), current->z());
     for (int i = l - 1 + l - 1; i > l; i--)
     {
+        next = current;
+        current = current->getLast();
         cout << 2;
-        // delta[i] = df(current->z()).HadProd(next->w().T() * delta[i + 1]);
-        current = last;
-        cout << 3;
-        // last = last->getLast();
+        delta[i] = df(current->z()).HadProd(next->w().T() * delta[i + 1]);
     }
 
-    // Layer * last(net.input);
-    // for (int i = 1; i < l; i++)
-    // {
-    //     cout << 5;
-    //     delta[i] = last->a() * delta[i];
-    //     cout << 6;
-    //     last = last->getNext();
-    // }
+    current = net.input;
+    for (int i = l; i < l + l; i++)
+    {
+        delta[i] = delta[i] * current->a().T();
+        current = current->getNext();
+    }
     
     return delta;
 }

@@ -57,10 +57,11 @@ NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, output{new Layer{L[l - 1], L[
     for (int i = 1; i < l - 1; i++)
     {
         next = new Layer{L[l - 1 - i], L[l - 2 - i], current};
-        next->setLast(current);
+        current->setLast(next);
         current = next;
     }
     input = new Layer{L[0], L[0], current, true};
+    current->setLast(input);
     input->setLast();
 }
 

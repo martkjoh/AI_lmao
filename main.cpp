@@ -7,7 +7,7 @@ int main()
     int L[l] = {
         2,
         3,
-        2
+        4
     };
 
     float d[L[0]] = {
@@ -25,7 +25,7 @@ int main()
     Del delc(N);
 
     N.activate(data);
-    // N.printNet();
+    N.printNet();
 
     delc.backProp(N, &y);
 

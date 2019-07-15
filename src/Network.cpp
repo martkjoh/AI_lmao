@@ -1,20 +1,18 @@
 #include <cmath>
 #include "../header/Network.h"
 
-
 using namespace std;
 
-Layer::Layer(int n, int m, Layer * next) : 
-    n{n}, m{m}, next{next}, neurons{n, 1}, biases{rand(n, 1)}, weights{rand(n, m)} {}
 
-Layer::Layer(int n, int m, Layer * next, bool in) : Layer(n, m, next)
-{
-    if (in) {weights = Matrix{m, n};}
-}
+Layer::Layer(int n, int m, Layer * next) : 
+    n{n}, m{m}, next{next}, activation{n, 1}, biases{rand(n, 1)}, weights{rand(n, m)} {}
+
+Layer::Layer(int n, int m, Layer * next, bool in) : 
+    n{n}, m{m}, next{next}, activation{n, 1}, biases{n, 1}, weights{n, m} {}
 
 void Layer::updateLayer(Layer * former)
 {
-    neurons = f(weights * former->neurons + biases);
+    activation = f(weights * former->activation + biases);
 }
 
 void Layer::printLayer()
@@ -22,19 +20,13 @@ void Layer::printLayer()
     cout << "weights:" << endl;
     weights.print();
     cout << "activation" << endl;
-    neurons.print();
+    activation.print();
     cout << "bias" << endl;
     biases.print();
 }
 
-void Layer::setNeurons(Matrix data)
-{
-    neurons = data;
-}
-
 
 // NeuralNet
-
 
 NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, output{new Layer{L[l - 1], L[l - 2]}}
 {
@@ -105,8 +97,14 @@ Matrix f(Matrix x)
     return x;
 }
 
-float C(Matrix a, Matrix y)
+Matrix df(Matrix x)
 {
-    Matrix d = a - y;
-    return (d.T() * d)[0][0] / d.shape().m;
+    for (int i = 0; i < x.shape().m; i++)
+    {
+        for (int j = 0; j < x.shape().n; j++)
+        {
+            x[i][j] = exp(-x[i][j]) / pow((1 + exp(-x[i][j])), 2);
+        }
+    }
+    return x;
 }

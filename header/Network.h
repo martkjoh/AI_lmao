@@ -6,12 +6,13 @@ class Layer
         // n is neurons in current layer, m is in the former
         int n, m;
         
-        Matrix neurons;
+        Matrix activation;
         Matrix biases;
         Matrix weights;
 
         Layer * next;
         Layer * last;
+
 
     public:
 
@@ -24,12 +25,11 @@ class Layer
         Layer * getLast() const {return last;}
         void setLast(Layer * last = nullptr) {this->last = last;}
         int width() const {return n;}
-        float getVal(int j) {return neurons[j][0];}
-        Matrix getVals() {return neurons;}
+        float getVal(int j) {return activation[j][0];}
+        Matrix getVals() {return activation;}
         void printLayer();
 
-        void setNeurons(Matrix data);
-
+        void setNeurons(Matrix data){activation = data;}
 };
 
 
@@ -38,7 +38,7 @@ class NeuralNet
     private:
         int * L;
         int l;
-
+        
         Layer * output;
         Layer * input;
 
@@ -49,6 +49,9 @@ class NeuralNet
         void printNet() const;
         Matrix activate(Matrix data);
         Matrix getOutput() {return output->getVals();}
+
+    friend class DelVec; 
+    friend class Del;
 };
 
 
@@ -57,4 +60,4 @@ class NeuralNet
 // Functions used by the NeuralNet, layers, or other related functions
 
 Matrix f(Matrix x);
-float C(Matrix a, Matrix y);
+Matrix df(Matrix x);

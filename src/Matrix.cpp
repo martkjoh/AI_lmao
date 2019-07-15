@@ -47,6 +47,19 @@ Matrix Matrix::operator*=(const Matrix &rhs)
     return A;
 }
 
+Matrix Matrix::operator*=(const float &rhs)
+{
+    for (int i = 0; i < this->s.m; i++)
+    {
+        for (int j = 0; j < this->s.n; j++)
+        {
+            data[j + s.n * i] *= rhs;
+        }
+    }
+    return *this;
+}
+
+
 Matrix Matrix::operator+= (const Matrix &rhs)
 {
     if (!(this->shape() == rhs.shape()))
@@ -99,6 +112,19 @@ int Matrix::size() {return s.m * s.n;}
 float Matrix::getVal(int i, int j) const {return data[j + s.n * i];}
 Shape Matrix::shape() const {return s;}
 
+Matrix Matrix::HadProd(Matrix & lhs)
+{
+    for (int i = 0; i < s.m; i++)
+    {
+        for (int j = 0; j < s.n; j++)
+        {
+            data[j + s.n * i] *= lhs[i][j];
+        }
+    }
+    return *this;
+}
+
+
 Matrix Matrix::T() const
 {
     Matrix T{s.n, s.m};
@@ -118,6 +144,8 @@ Matrix Matrix::T() const
 Matrix operator* (Matrix lhs, const Matrix &rhs) {return lhs *= rhs;}
 Matrix operator+ (Matrix lhs, const Matrix &rhs) {return lhs += rhs;}
 Matrix operator- (Matrix lhs, const Matrix &rhs) {return lhs -= rhs;}
+Matrix operator* (Matrix lhs, const float &rhs) {return lhs *= rhs;}
+
 
 
 // Helper functions for matrices

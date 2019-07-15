@@ -33,6 +33,7 @@ class Matrix
         Matrix operator-=(Matrix rhs);
         Matrix operator- ();
         Matrix operator*= (const Matrix &rhs);
+        Matrix operator*= (const float &rhs);
         Matrix operator= (Matrix rhs);
         virtual float * operator[](int i);
 
@@ -44,7 +45,7 @@ class Matrix
         int m() {return s.m;}
         int n() {return s.n;}
         float absMax() const;
-        int getInt(int i, int j = 0) {return (int)getVal(i, j);}
+        Matrix HadProd(Matrix & lhs);
         Matrix T() const;
 };
 
@@ -53,5 +54,6 @@ class Matrix
 Matrix operator* (Matrix lhs, const Matrix &rhs);
 Matrix operator+ (Matrix lhs, const Matrix &rhs);
 Matrix operator- (Matrix lhs, const Matrix &rhs);
+Matrix operator* (Matrix lhs, const float &rhs);
 
 Matrix rand(int M, int N, float min = 0, float max = 1);

@@ -11,9 +11,6 @@
                 "${workspaceFolder}",
                 "&&",
                 "make",
-                "clean",
-                "&&",
-                "make",
                 "run"
             ],
             "group": {

@@ -5,14 +5,36 @@ using namespace std;
 
 
 Layer::Layer(int n, int m, Layer * next) : 
-    n{n}, m{m}, next{next}, activation{n, 1}, biases{rand(n, 1)}, weights{rand(n, m)} {}
+    n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m)} {}
 
 Layer::Layer(int n, int m, Layer * next, bool in) : 
-    n{n}, m{m}, next{next}, activation{n, 1}, biases{n, 1}, weights{n, m} {}
+    n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{n, 1}, weights{n, m} {}
+
+Layer::Layer(const Layer & cpy) : Layer(cpy.n, cpy.m, cpy.next, true)
+{
+    this->weightedSum = cpy.weightedSum;
+    this->activation = cpy.activation;
+    this->biases = cpy.biases;
+    this->weights = cpy.weights;
+}
+
+Layer Layer::operator= (Layer rhs) 
+{
+    this->n = rhs.n;
+    this->m = rhs.m;
+    this->next = rhs.next;
+    this->weightedSum = rhs.weightedSum;
+    this->activation = rhs.activation;
+    this->biases = rhs.biases;
+    this->weights = rhs.weights;
+    return *this;
+}
+
 
 void Layer::updateLayer(Layer * former)
 {
-    activation = f(weights * former->activation + biases);
+    weightedSum = weights * former->activation + biases;
+    activation = f(weightedSum);
 }
 
 void Layer::printLayer()
@@ -78,7 +100,7 @@ Matrix NeuralNet::activate(Matrix data)
         current = last->getNext();
     }
     while (current != nullptr);
-    return output->getVals();
+    return output->a();
 }
 
 // Free functions

@@ -112,13 +112,13 @@ int Matrix::size() {return s.m * s.n;}
 float Matrix::getVal(int i, int j) const {return data[j + s.n * i];}
 Shape Matrix::shape() const {return s;}
 
-Matrix Matrix::HadProd(Matrix & lhs)
+Matrix Matrix::HadProd(const Matrix & lhs)
 {
     for (int i = 0; i < s.m; i++)
     {
         for (int j = 0; j < s.n; j++)
         {
-            data[j + s.n * i] *= lhs[i][j];
+            data[j + s.n * i] *= lhs.getVal(i, j);
         }
     }
     return *this;

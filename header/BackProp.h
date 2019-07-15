@@ -7,7 +7,8 @@
 class DelVec
 {
     private:
-        vector<Matrix *> vec;
+        vector<Matrix *> db;
+        vector<Matrix *> dw;
         int l;
         int * L;
 
@@ -15,7 +16,13 @@ class DelVec
         DelVec(NeuralNet & net);
         ~DelVec();
 
-        Matrix operator[](int i) {return * vec[i];} 
+        Matrix operator[](int i) 
+        {
+            if (i < l)
+                return * db[i];
+            else
+                return * dw[i - l];
+        } 
     
     friend class Del;
 };
@@ -24,19 +31,20 @@ class Del
 {
     private:
         DelVec delC;
-        int l;
         int * L;
+        int l;
+
 
         Matrix C(Matrix a, Matrix y);
         Matrix dC(Matrix a, Matrix y);
 
-        DelVec makeVec(NeuralNet & net);
-        DelVec backProp(NeuralNet & net, Matrix * y);
         void avBackProp(NeuralNet & net, vector<Matrix *> data, vector<Matrix *> y);
         void addDel(DelVec & delR, DelVec & delL);
 
     public:
-        Del(NeuralNet & net) : delC{makeVec(net)}, l{net.l}, L{net.L} {}
+        Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
+
+        DelVec backProp(NeuralNet & net, Matrix * y);
     
-    friend class l;
+    friend class DelVec;
 };

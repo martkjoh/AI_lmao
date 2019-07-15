@@ -7,6 +7,7 @@ class Layer
         int n, m;
         
         Matrix activation;
+        Matrix weightedSum;
         Matrix biases;
         Matrix weights;
 
@@ -18,6 +19,9 @@ class Layer
 
         Layer(int n, int m, Layer * next = nullptr);
         Layer(int n, int m, Layer * next, bool in);
+        Layer(const Layer & cpy);
+
+        Layer operator= (Layer rhs);
 
         void updateLayer(Layer * former);
 
@@ -26,7 +30,9 @@ class Layer
         void setLast(Layer * last = nullptr) {this->last = last;}
         int width() const {return n;}
         float getVal(int j) {return activation[j][0];}
-        Matrix getVals() {return activation;}
+        Matrix a() {return activation;}
+        Matrix z() {return weightedSum;}
+        Matrix w() {return weights;}
         void printLayer();
 
         void setNeurons(Matrix data){activation = data;}
@@ -48,7 +54,7 @@ class NeuralNet
 
         void printNet() const;
         Matrix activate(Matrix data);
-        Matrix getOutput() {return output->getVals();}
+        Matrix getOutput() {return output->a();}
 
     friend class DelVec; 
     friend class Del;

@@ -2,12 +2,12 @@
 
 DelVec::DelVec(NeuralNet & net) : L{net.L}, l{net.l}
 {
-    vec[0] = new Matrix(0, 0);
-    vec[l] = new Matrix(0, 0);
+    db.push_back(new Matrix(L[0], L[0]));
+    dw.push_back(new Matrix(L[0], 1));
     for (int i = 1; i < l; i++)
     {
-        vec[i] = new Matrix(L[i - 1], L[i]);
-        vec[i + l] = new Matrix(L[i], 0); 
+        db.push_back(new Matrix(L[i - 1], L[i]));
+        dw.push_back(new Matrix(L[i], 1)); 
     }
 }
 
@@ -15,8 +15,8 @@ DelVec::~DelVec()
 {
     for (int i = 0; i < l; i++)
     {
-        delete vec[i];
-        delete vec[i + l];
+        delete db[i];
+        delete dw[i];
     }
 }
 
@@ -39,8 +39,30 @@ Matrix Del::dC(Matrix a, Matrix y)
 DelVec Del::backProp(NeuralNet & net, Matrix * y) 
 {
     DelVec delta = DelVec(net);
-    delta[l] = dC(net.output->getVals(), *y);
+    Layer * current(net.output);
+    Layer * last(current->getLast());
+    // ! something goes wrong here
+    last->getLast();
+    cout << 1;
+    delta[l - 1 + l] = dC(current->a(), current->z());
+    for (int i = l - 1 + l - 1; i > l; i--)
+    {
+        cout << 2;
+        // delta[i] = df(current->z()).HadProd(next->w().T() * delta[i + 1]);
+        current = last;
+        cout << 3;
+        // last = last->getLast();
+    }
 
+    // Layer * last(net.input);
+    // for (int i = 1; i < l; i++)
+    // {
+    //     cout << 5;
+    //     delta[i] = last->a() * delta[i];
+    //     cout << 6;
+    //     last = last->getNext();
+    // }
+    
     return delta;
 }
 
@@ -52,7 +74,6 @@ void Del::avBackProp(NeuralNet & net, vector<Matrix *> data, vector<Matrix *> y)
         net.activate(*data[0]);
         DelVec del = backProp(net, y[i]);
         addDel(delC, del); 
-
     }
 }
 

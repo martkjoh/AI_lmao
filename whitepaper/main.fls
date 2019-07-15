@@ -90,6 +90,7 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/bbold/bbold7.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/bbold/bbold5.tfm
 INPUT /home/martin/Repos/AI_lmao/whitepaper/backprop.tex
 INPUT /home/martin/Repos/AI_lmao/whitepaper/backprop.tex
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 OUTPUT /home/martin/Repos/AI_lmao/whitepaper/main.pdf
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT /home/martin/Repos/AI_lmao/whitepaper/datastructure.tex

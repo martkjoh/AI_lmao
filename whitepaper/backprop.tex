@@ -1,4 +1,4 @@
-\section*{Back propagation}
+\subsection*{Back propagation}
 The partial derivatives of the cost function with respect to the weights in the last layer is given by
 $$
     \frac{\partial C}{\partial w^{(l)}_{jk}} = \frac{\partial C}{\partial a^{(l)}_{j}} 
@@ -15,7 +15,7 @@ and
 $$
 \frac{\partial z^{(l)}_{j}}{\partial w^{(l)}_{jk}} = a^{(l - 1)}_k,
 $$
-giving us this parital derivative. For subsequent layers, the derivative with respect to the activation is given by
+giving us this parital derivative. For subsequent layers, the derivative with respect to the weighted sum is given by
 $$
     \frac{\partial C}{\partial a^{(i - 1)}_{j}} = \sum_{k = 1}^{L_j}\frac{\partial C}{\partial a^{(i)}_{k}} 
     \frac{\partial a^{(i)}_{k}}{\partial z^{(i)}_{k}} \frac{\partial z^{(i)}_{k}}{\partial a^{(i -1)}_{k}},
@@ -23,11 +23,11 @@ $$
 as the output depends on the activation of all the nodes in the former layer, the activation of that layer depnds on the activation of all the nodes in the layer before that, and som on. 
 This can be calculated recursively. As before,
 $$
-    \frac{\partial a^{(i)}_{j}}{\partial z^{(i)}_{j}} = \frac{\partial f}{\partial x} = \frac{-\exp(x)}{(\exp(x) + 1)^2}
+    \frac{\partial a^{(i)}_{j}}{\partial z^{(i)}_{j}} = f^\prime (z) = \frac{-\exp(x)}{(\exp(x) + 1)^2}
 $$
 and
 $$
-    \frac{\partial z^{(i)}_{j}}{\partial w^{(i)}_{jk}} = a^{(i - 1)}_k.
+    \frac{\partial z^{(i)}_{j}}{\partial a^{(i - 1)}_{jk}} = w^{(i)}_{jk}.
 $$
 To find the derivative with respect to the weight, we implicilty differentiate $a^{(i)}_{j}$,
 $$ 
@@ -35,7 +35,7 @@ $$
 $$
 This gives
 $$
-    \frac{\partial C}{\partial w^{(i - 1)}_{jk}} = \frac{\partial C}{\partial a^{(i - 1)}_{j}} \frac{\partial a^{(i - 1)}_{j}}{\partial w^{(i - 1)}_{jk}} = \frac{\partial C}{\partial a^{(i - 1)}_{j}} f^\prime (z)a^{(i-1)}_{j}.
+    \frac{\partial C}{\partial w^{(i)}_{jk}} = \frac{\partial C}{\partial a^{(i)}_{j}} \frac{\partial a^{(i)}_{j}}{\partial w^{(i)}_{jk}} = \frac{\partial C}{\partial a^{(i)}_{j}} f^\prime (z)a^{(i-1)}_{j}.
 $$
 
 To find the full gradient, we also need the partial derivatives with respect to the biases. These can now be easily found as,
@@ -48,6 +48,25 @@ $$
     \frac{\partial C}{\partial b^{(i)}_{j}} = \sum_{k = 1}^{L_j}\frac{\partial C}{\partial a^{(i)}_{k}} 
     \frac{\partial a^{(i)}_{k}}{\partial z^{(i)}_{k}} \frac{\partial z^{(i)}_{k}}{\partial b^{(i)}_{j}} = \sum_{k = 1}^{L_j}\frac{\partial C}{\partial a^{(i)}_{k}}
     \frac{\partial a^{(i)}_{k}}{\partial z^{(i)}_{k}}.
+$$
+
+Substituring for all the known partial derivatives, we get
+$$
+    \frac{\partial C}{\partial w^{(l)}_{jk}} = a^{(l - 1)}_k 2(a^{(l)}_{j} - y_j) f^\prime (z)
+$$
+$$
+    \frac{\partial C}{\partial a^{(i - 1)}_{j}} = \sum_{k = 1}^{L_j}\frac{\partial C}{\partial a^{(i)}_{k}} 
+    f^\prime (z) w^{(i)}_{jk},
+$$
+$$
+    \frac{\partial C}{\partial w^{(i)}_{jk}} = \frac{\partial C}{\partial a^{(i)}_{j}} f^\prime (z)a^{(i-1)}_{j}
+$$
+$$
+    \frac{\partial C}{\partial b^{(l)}_{j}} = 2(a^{(l)}_{j} - y_j) f^\prime (z)
+$$
+$$
+    \frac{\partial C}{\partial b^{(i)}_{j}} = \sum_{k = 1}^{L_j}\frac{\partial C}{\partial a^{(i)}_{k}} 
+    f^\prime (z) 
 $$
 
 The backpropagating algorithm therefore consists of 

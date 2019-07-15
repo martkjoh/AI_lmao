@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1563196727 "/home/martin/Repos/AI_lmao/whitepaper/main.tex" "/home/martin/Repos/AI_lmao/whitepaper/main.pdf" "main" 1563196727
+["pdflatex"] 1563199422 "/home/martin/Repos/AI_lmao/whitepaper/main.tex" "/home/martin/Repos/AI_lmao/whitepaper/main.pdf" "main" 1563199423
   "/dev/null" 1563192409 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "/home/martin/Repos/AI_lmao/whitepaper/main.aux" 1563196727 8 a94a2480d3289e625eea47cd1b285758 ""
+  "/home/martin/Repos/AI_lmao/whitepaper/main.aux" 1563199423 8 a94a2480d3289e625eea47cd1b285758 ""
   "/home/martin/Repos/AI_lmao/whitepaper/main.tex" 1563196259 417 d219474b978c10cfc2fb67e13006b68d ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1557554374 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1557554374 1004 54797486969f23fa377b128694d548df ""
@@ -64,14 +64,14 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1557554374 33301 a3134070eacafb10b1f371612ce2650d ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1563046444 3106380 436fef8c2e0ca660ce1dd89198cfa583 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1563046422 7979416 a277dd2b277cb98e39512ad0d36f59bd ""
-  "backprop.tex" 1563196726 3574 91fb094903a3db4d84398584569dc806 ""
+  "backprop.tex" 1563199422 4186 989c3e6be2b7a2587625cb1fd4bb2d60 ""
   "datastructure.tex" 1563053042 389 b9e3baa88d0ab1c4c88288d3d5ca990a ""
-  "main.aux" 1563196727 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
+  "main.aux" 1563199423 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
   "main.tex" 1563196259 417 d219474b978c10cfc2fb67e13006b68d ""
   "theory.tex" 1563121954 1367 da5e2e9867974bccb577f9d9f21c03f1 ""
   (generated)
+  "main.log"
+  "main.aux"
   "/home/martin/Repos/AI_lmao/whitepaper/main.log"
   "main.pdf"
   "/home/martin/Repos/AI_lmao/whitepaper/main.pdf"
-  "main.log"
-  "main.aux"

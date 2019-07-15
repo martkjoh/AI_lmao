@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.7.13)  15 JUL 2019 15:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.7.13)  15 JUL 2019 16:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -322,21 +322,21 @@ LaTeX Font Info:    Try loading font information for U+bbold on input line 22.
  (/usr/share/texmf-dist/tex/latex/bbold/Ubbold.fd)) (/home/martin/Repos/AI_lmao/whitepaper/backprop.tex [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (0.83664pt too wide) in paragraph at lines 56--57
+Overfull \hbox (0.83664pt too wide) in paragraph at lines 75--76
 []\OT1/cmr/m/n/10 Loop back-wards through the neu-ral net to find Find $\OML/cmm/m/it/10 @C=@a[]$ \OT1/cmr/m/n/10 and $\OML/cmm/m/it/10 @C=@b[]$
  []
 
 ) (/home/martin/Repos/AI_lmao/whitepaper/datastructure.tex) [3] (/home/martin/Repos/AI_lmao/whitepaper/main.aux) ) 
 Here is how much of TeX's memory you used:
- 12714 strings out of 492623
- 229744 string characters out of 6135669
+ 12715 strings out of 492623
+ 229759 string characters out of 6135669
  458456 words of memory out of 5000000
- 16605 multiletter control sequences out of 15000+600000
- 537835 words of font info for 45 fonts, out of 8000000 for 9000
+ 16606 multiletter control sequences out of 15000+600000
+ 538142 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,8n,63p,343b,317s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on /home/martin/Repos/AI_lmao/whitepaper/main.pdf (3 pages, 139889 bytes).
+Output written on /home/martin/Repos/AI_lmao/whitepaper/main.pdf (3 pages, 140769 bytes).
 PDF statistics:
  74 PDF objects out of 1000 (max. 8388607)
  53 compressed objects within 1 object stream

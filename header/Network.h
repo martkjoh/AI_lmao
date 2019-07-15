@@ -36,6 +36,8 @@ class Layer
         void printLayer();
 
         void setNeurons(Matrix data){activation = data;}
+
+    friend class Del;
 };
 
 

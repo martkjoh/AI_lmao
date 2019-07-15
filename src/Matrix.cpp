@@ -112,13 +112,19 @@ int Matrix::size() {return s.m * s.n;}
 float Matrix::getVal(int i, int j) const {return data[j + s.n * i];}
 Shape Matrix::shape() const {return s;}
 
-Matrix Matrix::HadProd(const Matrix & lhs)
+Matrix Matrix::hadProd(const Matrix & rhs)
 {
+    if (!(this->shape() == rhs.shape()))
+    {
+        cout << "incompatible dimensions" << endl;
+        throw 1;
+    }
+
     for (int i = 0; i < s.m; i++)
     {
         for (int j = 0; j < s.n; j++)
         {
-            data[j + s.n * i] *= lhs.getVal(i, j);
+            data[j + s.n * i] *= rhs.getVal(i, j);
         }
     }
     return *this;

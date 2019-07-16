@@ -26,7 +26,7 @@ Matrix Matrix::operator*=(const Matrix &rhs)
 {
     if (this->s.n != rhs.s.m) 
     {
-        cout << "incompatible dimensions" << endl;
+        cout << "incompatible dimensions, mat mul" << endl;
         throw 1;
     }
 
@@ -64,7 +64,7 @@ Matrix Matrix::operator+= (const Matrix &rhs)
 {
     if (!(this->shape() == rhs.shape()))
     {
-        cout << "incompatible dimensions" << endl;
+        cout << "incompatible dimensions, addition" << endl;
         throw 1;
     }
 
@@ -95,6 +95,7 @@ Matrix Matrix::operator= (Matrix rhs)
     return *this;
 }
 
+
 void Matrix::print()
 {
     for (int i = 0; i < s.m; i++)
@@ -116,7 +117,7 @@ Matrix Matrix::hadProd(const Matrix & rhs)
 {
     if (!(this->shape() == rhs.shape()))
     {
-        cout << "incompatible dimensions" << endl;
+        cout << "incompatible dimensions, hadProd" << endl;
         throw 1;
     }
 

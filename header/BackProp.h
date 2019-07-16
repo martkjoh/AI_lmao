@@ -19,8 +19,11 @@ class DelVec
         ~DelVec();
 
         Matrix operator[](int i);
-        DelVec operator+= (const DelVec & rhs);
-        DelVec operator*= (const float & rhs);
+        // Returning DelVec causes segfault
+        void operator+= (const DelVec & rhs);
+        void operator*= (const float & rhs);
+
+        void printDims();
 
     friend class Del;
 };
@@ -28,25 +31,27 @@ class DelVec
 class Del
 {
     private:
-        DelVec delC;
         int * L;
         int l;
 
         float C(Matrix a, Matrix y);
         Matrix dC(Matrix a, Matrix y);
 
-        void reset() {delC *= 0;}
-
         void avBackProp(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
-        DelVec backProp(NeuralNet & net, Matrix * y);
+        void backProp(NeuralNet & net, Matrix * y, DelVec & del);
         void adjustWeights(NeuralNet & net);
 
 
     public:
+        DelVec delC;
+
         Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
+
+        void reset() {delC *= 0;}
 
         void train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m);
         float test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
-        
+        void printDims() {delC.printDims();}
+
     friend class DelVec;
 };

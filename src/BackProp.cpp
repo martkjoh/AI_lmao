@@ -8,7 +8,7 @@ DelVec::DelVec(NeuralNet & net) : L{net.L}, l{net.l}
     {
         db.push_back(new Matrix(L[i - 1], L[i]));
         dw.push_back(new Matrix(L[i], 1)); 
-    }
+    }\
 }
 
 DelVec::~DelVec()
@@ -37,22 +37,33 @@ Matrix DelVec::operator[](int i)
         return * dw[i - l];
 } 
 
-DelVec DelVec::operator+= (const DelVec & rhs)
+void DelVec::operator+= (const DelVec & rhs)
 {
     for (int i = 1; i < l; i++)
     {
-        (*this)[i] += rhs.getVal(i);
+        *dw[i] += *(rhs.dw[i]);
+        *db[i] += *(rhs.db[i]);
     }
-    return *this;
 }
 
-DelVec DelVec::operator*= (const float & rhs)
+void DelVec::operator*= (const float & rhs)
 {
     for (int i = 1; i < l; i++)
     {
-        (*this)[i] *= rhs;
+        *dw[i] *= rhs;
+        *db[i] *= rhs;
     }
-    return *this;
+}
+
+void DelVec::printDims()
+{
+    for (int i = 0; i < l; i++)
+    {
+        cout << i << "; " << endl;
+        cout << dw[i]->n() << ", " << dw[i]->n() << endl;
+        cout << db[i]->n() << ", " << db[i]->n() << endl;
+        cout << endl;
+    }
 }
 
 // Class Del
@@ -66,43 +77,45 @@ float Del::C(Matrix a, Matrix y)
 Matrix Del::dC(Matrix a, Matrix y)
 {
     Matrix d = a - y;
-    return d * (2 / d.m());
+    return d;
+    // return d * (2 / d.m());
 }
 
 
-DelVec Del::backProp(NeuralNet & net, Matrix * y) 
+void Del::backProp(NeuralNet & net, Matrix * y, DelVec & del)
 {
-    DelVec delta = DelVec(net);
     Layer * current(net.output);
     Layer * next;
-    delta[l - 1 + l] = dC(current->a(), current->z()).hadProd(df(current->z()));
+    dC(current->a(), current->z());
+    del[l - 1 + l] = dC(current->a(), current->z()).hadProd(df(current->z()));
     for (int i = l - 1 + l - 1; i > l; i--)
     {
         next = current;
         current = current->getLast();
-        delta[i] = df(current->z()).hadProd(next->w().T() * delta[i + 1]);
+        del[i] = df(current->z()).hadProd(next->w().T() * del[i + 1]);
     }
 
     current = net.input;
     for (int i = 1; i < l; i++)
     {
-        delta[i] = delta[i + l] * current->a().T();
+        del[i] = del[i + l] * current->a().T();
         current = current->getNext();
     }
-    
-    return delta;
 }
 
 void Del::avBackProp(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
 {
     int n = x.size();
+    DelVec del{net};
+    del.printDims();
     for (int i = 0; i < n; i++)
     {
         net.activate(*x[i]);
-        DelVec del = backProp(net, y[i]);
-        delC += del; 
+        backProp(net, y[i], del);
+        delC += del;
+        del *= 0;
     }
-    delC *= 1 / n;
+    delC *= 1. / n;
 }
 
 void Del::adjustWeights(NeuralNet & net)
@@ -121,11 +134,11 @@ void Del::train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
     int n = x.size();
     auto xIt = x.begin();
     auto yIt = y.begin();
-    for (int i = 0; i < n % m; i++)
+    for (int i = 0; i < n / m; i++)
     {
         reset();
-        vector<Matrix *> xSlice = vector<Matrix *>(xIt + i * m, xIt + (i +1) * m);  
-        vector<Matrix *> ySlice = vector<Matrix *>(yIt + i * m, yIt + (i +1) * m);
+        vector<Matrix *> xSlice = vector<Matrix *>(xIt + i * m, xIt + (i + 1) * m - 1);  
+        vector<Matrix *> ySlice = vector<Matrix *>(yIt + i * m, yIt + (i + 1) * m - 1);
         avBackProp(net, xSlice, ySlice);
     }
 }
@@ -137,7 +150,7 @@ float Del::test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
     for (int i = 0; i < n; i++)
     {
         net.activate(*x[i]);
-        s += C(net.getOutput(), y[i]);
+        s += C(net.getOutput(), *y[i]);
     }
-    return s / (n * 1.);
+    return s / n;
 }

@@ -89,28 +89,28 @@ void DelVec::printDims()
     }
 }
 
+
 // Class Del
 
 float Del::C(Matrix a, Matrix y)
 {
     Matrix d = a - y;
-    return (d.T() * d)[0][0] / d.m() / 2.;
+    return (d.T() * d)[0][0] / 2.;
 }
 
 Matrix Del::dC(Matrix a, Matrix y)
 {
     Matrix d = a - y;
-    return (d * (1 / d.m()));
+    return d;
 }
 
 
 void Del::backProp(NeuralNet & net, Matrix * y, DelVec & del)
 {
-    Layer * current(net.output);
-    Layer * next;
-    dC(current->a(), current->z());
+    Layer * current(net.output);    // equivalent to index i
+    Layer * next;                   // equivalent to index i + 1
     *del[l - 1 + l] = dC(current->a(), *y).hadProd(df(current->z()));
-    for (int i = l - 1 + l - 1; i > l; i--)
+    for (int i = l - 2 + l; i > l; i--)
     {
         next = current;
         current = current->getLast();
@@ -145,8 +145,9 @@ void Del::adjustWeights(NeuralNet & net)
     Layer * current = net.input->getNext();
     for (int i = 1; i < l; i++)
     {
-        current->biases -= *delC[i + l];
-        current->weights -= *delC[i];
+        float eta = 1;
+        current->biases -= *delC[i + l] * eta;
+        current->weights -= *delC[i] * eta;
         current = current->getNext();
     }
 }
@@ -154,6 +155,7 @@ void Del::adjustWeights(NeuralNet & net)
 
 void Del::train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
 {
+    cout << "Training neural network" << endl;
     int n = x.size();
     auto xIt = x.begin();
     auto yIt = y.begin();
@@ -162,9 +164,18 @@ void Del::train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
         reset();
         vector<Matrix *> xSlice = vector<Matrix *>(xIt + i * m, xIt + (i + 1) * m - 1);  
         vector<Matrix *> ySlice = vector<Matrix *>(yIt + i * m, yIt + (i + 1) * m - 1);
-        avBackProp(net, xSlice, ySlice);
-        adjustWeights(net);
-        cout << test(net, x, y) << endl;
+        for (int i = 0; i < 10; i++) 
+        {        
+            avBackProp(net, xSlice, ySlice);
+            adjustWeights(net);
+        }
+        if (10 * i % (n / m)  == 0)
+        {
+            cout << 100 * (i + 1) / (n / m) << "%" << endl;
+            cout << test(net, x, y) << endl;
+ 
+        }
+
     }
 }
 

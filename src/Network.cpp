@@ -5,7 +5,7 @@ using namespace std;
 
 
 Layer::Layer(int n, int m, Layer * next) : 
-    n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m)} {}
+    n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m, -0.5, 0.5)} {}
 
 Layer::Layer(int n, int m, Layer * next, bool in) : 
     n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{n, 1}, weights{n, m} {}

@@ -36,21 +36,24 @@ class DelVec
 class Del
 {
     private:
+        DelVec delC;
+
         int * L;
         int l;
 
         Matrix dC(Matrix a, Matrix y);
 
         void avBackProp(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
-        void backProp(NeuralNet & net, Matrix * y, DelVec & del);
-        void adjustWeights(NeuralNet & net);
 
 
     public:
-        DelVec delC;
         float C(Matrix a, Matrix y);
-        Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
 
+        void backProp(NeuralNet & net, Matrix * y, DelVec & del);
+        void adjustWeights(NeuralNet & net);
+        
+        Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
+        
         void reset() {delC *= 0;}
 
         void train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m);

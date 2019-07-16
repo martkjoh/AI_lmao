@@ -16,12 +16,15 @@ class DelVec
 
     public:
         DelVec(NeuralNet & net);
+        DelVec(const DelVec & rhs);
         ~DelVec();
 
-        Matrix operator[](int i);
+        Matrix * operator[](int i);
         // Returning DelVec causes segfault
         void operator+= (const DelVec & rhs);
         void operator*= (const float & rhs);
+        void operator= (DelVec rhs);
+
 
         void printDims();
 

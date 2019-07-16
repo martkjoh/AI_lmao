@@ -91,6 +91,7 @@ Matrix Matrix::operator- ()
 
 Matrix Matrix::operator= (Matrix rhs)
 {
+    s = rhs.s; 
     swap(rhs.data, data);
     return *this;
 }

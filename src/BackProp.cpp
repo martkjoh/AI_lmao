@@ -94,13 +94,13 @@ void DelVec::printDims()
 float Del::C(Matrix a, Matrix y)
 {
     Matrix d = a - y;
-    return (d *d)[0][0] * (1 / d.m());
+    return (d *d)[0][0] * (1 / d.m()) / 2;
 }
 
 Matrix Del::dC(Matrix a, Matrix y)
 {
-    Matrix d = y - a;
-    return d * (2 / d.m());
+    Matrix d = a - y;
+    return (d * (1 / d.m()));
 }
 
 
@@ -109,7 +109,7 @@ void Del::backProp(NeuralNet & net, Matrix * y, DelVec & del)
     Layer * current(net.output);
     Layer * next;
     dC(current->a(), current->z());
-    *del[l - 1 + l] = dC(current->a(), current->z()).hadProd(df(current->z()));
+    *del[l - 1 + l] = dC(current->a(), *y).hadProd(df(current->z()));
     for (int i = l - 1 + l - 1; i > l; i--)
     {
         next = current;
@@ -164,6 +164,7 @@ void Del::train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
         vector<Matrix *> ySlice = vector<Matrix *>(yIt + i * m, yIt + (i + 1) * m - 1);
         avBackProp(net, xSlice, ySlice);
         adjustWeights(net);
+        cout << test(net, x, y) << endl;
     }
 }
 

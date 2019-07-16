@@ -14,30 +14,30 @@ int main()
 
     float xd1[L[0]] =
     {
-        1,
+        0.5,
         0
     };
 
     float xd2[L[0]] =
     {
         0,
-        1
+        0
     };
 
     float yd1[L[l - 1]] = 
     {
-        1
+        0
     };
 
     float yd2[L[l - 1]] = 
     {
-        0
+        1
     };
 
 
     vector<Matrix *> x;
     vector<Matrix *> y;
-    int n = 10000;
+    int n = 1000;
     int m = 10;
 
     NeuralNet N(L, l);

@@ -114,7 +114,7 @@ Matrix f(Matrix x)
     {
         for (int j = 0; j < x.shape().n; j++)
         {
-            x[i][j] = 1 / (1 + exp(-x[i][j]));
+            x[i][j] = 1. / (1 + exp(-x[i][j]));
         }
     }
     return x;

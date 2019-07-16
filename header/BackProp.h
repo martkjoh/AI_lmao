@@ -7,7 +7,6 @@
 class DelVec
 {
     private:
-        vector<Matrix *> db;
         vector<Matrix *> dw;
         int l;
         int * L;
@@ -15,6 +14,9 @@ class DelVec
         Matrix getVal(int i) const;
 
     public:
+        vector<Matrix *> db;
+
+
         DelVec(NeuralNet & net);
         DelVec(const DelVec & rhs);
         ~DelVec();
@@ -37,7 +39,6 @@ class Del
         int * L;
         int l;
 
-        float C(Matrix a, Matrix y);
         Matrix dC(Matrix a, Matrix y);
 
         void avBackProp(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
@@ -47,7 +48,7 @@ class Del
 
     public:
         DelVec delC;
-
+        float C(Matrix a, Matrix y);
         Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
 
         void reset() {delC *= 0;}

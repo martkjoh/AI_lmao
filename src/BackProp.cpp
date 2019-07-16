@@ -94,7 +94,7 @@ void DelVec::printDims()
 float Del::C(Matrix a, Matrix y)
 {
     Matrix d = a - y;
-    return (d *d)[0][0] * (1 / d.m()) / 2;
+    return (d.T() * d)[0][0] / d.m() / 2.;
 }
 
 Matrix Del::dC(Matrix a, Matrix y)

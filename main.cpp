@@ -23,29 +23,9 @@ int main()
     int l = 4;
     int L[l] = {784, 16, 16, 10};
     NeuralNet N(L, l);
-    Del delC(N);
 
-    // int s = 100;
-    // DelVec d{N};
-    // for (int i = 0; i < s; i++)
-    // {
-    //     N.activate(*x[0]);
-    //     delC.backProp(N,y[0], d);
-    //     delC.adjustWeights(N);
-    //     // delC.reset();
-    //     cout << delC.test(N, x, y) << endl;
-    // }
-    for (int i = 0; i < 100; i++)
-        delC.train(N, xTrain, yTrain, m);
-    cout << delC.test(N, x, y) << endl;
+    trainNN(N, 20, 10, xTrain, yTrain);
+    testNN(N, x, y);
 
-    for (int i = 0; i < 20; i++)
-    {
-       N.activate(*x[i]);
-        N.getOutput().print();
-        (*y[i]).T().print();
-        cout << endl;          
-    }
-    
     return 0;
 }

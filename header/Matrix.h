@@ -47,6 +47,8 @@ class Matrix
         int m() {return s.m;}
         int n() {return s.n;}
         float absMax() const;
+        Shape absMaxIndex();
+
         Matrix hadProd(const Matrix & lhs);
         Matrix T() const;
 };

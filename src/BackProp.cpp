@@ -152,10 +152,9 @@ void Del::adjustWeights(NeuralNet & net)
     }
 }
 
-
-void Del::train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
+// TODO: Make actually stochasic (picking of vector slices)
+void Del::SGD(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
 {
-    cout << "Training neural network" << endl;
     int n = x.size();
     auto xIt = x.begin();
     auto yIt = y.begin();
@@ -169,13 +168,6 @@ void Del::train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
             avBackProp(net, xSlice, ySlice);
             adjustWeights(net);
         }
-        if (10 * i % (n / m)  == 0)
-        {
-            cout << 100 * (i + 1) / (n / m) << "%" << endl;
-            cout << test(net, x, y) << endl;
- 
-        }
-
     }
 }
 
@@ -189,4 +181,38 @@ float Del::test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
         s += C(net.getOutput(), *y[i]);
     }
     return s / n;
+}
+
+// Free functions
+// 
+// Fere functions to work with the classes aboce
+
+// n is the number of time to train the network,
+// m is the number of baches the training data is seperated into
+void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y)
+{
+    cout << "Training neural network" << endl;
+    Del delC(net);
+    for (int i = 0; i < n; i++)
+    {
+        delC.SGD(net, x, y, m);
+        cout << (100 * i) / n << "%" << endl;
+    }
+}
+
+void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
+{
+    float correct = 0;
+    int n = x.size();
+    Matrix guess;
+    Matrix answ;
+    for (int i = 0; i < n; i++)
+    {
+        answ = *y[i];
+        net.activate(*x[i]);
+        guess = net.getOutput();
+        if (answ.absMaxIndex() == guess.absMaxIndex()) 
+            correct += 1;
+    }
+    cout << "AI_lmao gjettet " << 100 * correct / n << "% riktig" << endl;
 }

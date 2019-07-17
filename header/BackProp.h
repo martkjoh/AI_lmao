@@ -41,24 +41,30 @@ class Del
         int * L;
         int l;
 
+        float C(Matrix a, Matrix y);
         Matrix dC(Matrix a, Matrix y);
 
         void avBackProp(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
+        void backProp(NeuralNet & net, Matrix * y, DelVec & del);
+        void adjustWeights(NeuralNet & net);
+        float test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
 
 
     public:
-        float C(Matrix a, Matrix y);
-
-        void backProp(NeuralNet & net, Matrix * y, DelVec & del);
-        void adjustWeights(NeuralNet & net);
-        
         Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
         
+        void SGD(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m);
         void reset() {delC *= 0;}
-
-        void train(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m);
-        float test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
         void printDims() {delC.printDims();}
 
     friend class DelVec;
 };
+
+
+// Free functions
+// 
+// Fere functions to work with the classes aboce
+
+void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y);
+
+void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);

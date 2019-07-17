@@ -114,6 +114,26 @@ int Matrix::size() {return s.m * s.n;}
 float Matrix::getVal(int i, int j) const {return data[j + s.n * i];}
 Shape Matrix::shape() const {return s;}
 
+// returns a array of the index of the larges elemet by absolute value
+Shape Matrix::absMaxIndex()
+{
+    Shape index{0, 0};
+    float max = 0;
+    for (int i = 0; i < s.m; i++)
+    {
+        for (int j = 0; j < s.n; j++)
+        {
+            if (max < abs(getVal(i, j)))
+            {
+                max = abs(getVal(i, j));
+                index.m = i;
+                index.n = j;
+            }
+        }
+    }
+    return index;
+}
+
 Matrix Matrix::hadProd(const Matrix & rhs)
 {
     if (!(this->shape() == rhs.shape()))

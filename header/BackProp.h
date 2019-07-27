@@ -71,6 +71,6 @@ void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *>
 void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
 
 
-// TODO: Function that saves the weights an biases
+
 
 // TODO: Funciton that guesses number based on selected image file

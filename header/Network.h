@@ -1,20 +1,19 @@
-#include "Matrix.h"
+#pragma once
 
-// TODO: Make sublayer without weights an biases
+#include "Matrix.h"
+#include <iostream>
+#include <fstream>
+
+// Layer
+
 class Layer
 {
     protected:
         // n is neurons in current layer, m is in the former
         int n, m;
-        
-        Matrix activation;
-        Matrix weightedSum;
-        Matrix biases;
-        Matrix weights;
-
+        Matrix activation, weightedSum, biases, weights;
         Layer * next;
         Layer * last;
-
 
     public:
 
@@ -23,9 +22,9 @@ class Layer
         Layer(const Layer & cpy);
 
         Layer operator= (Layer rhs);
+        friend ofstream& operator<<(ofstream & os, const Layer & rhs);
 
         void updateLayer(Layer * former);
-
         Layer * getNext() const {return next;}
         Layer * getLast() const {return last;}
         void setNext(Layer * next = nullptr) {this->next = next;}
@@ -36,8 +35,8 @@ class Layer
         Matrix w() {return weights;}
         void printLayer();
         void printShape();
-
         void setNeurons(Matrix data){activation = data;}
+
 
     friend class Del;
 };
@@ -62,6 +61,7 @@ class NeuralNet
         void printShape() const;
         Matrix activate(Matrix data);
         Matrix getOutput() {return output->a();}
+        void saveNet(string path = "net");
 
     friend class DelVec; 
     friend class Del;
@@ -69,8 +69,6 @@ class NeuralNet
 
 
 // Free functions
-//
-// Functions used by the NeuralNet, layers, or other related functions
 
 Matrix f(Matrix x);
 Matrix df(Matrix x);

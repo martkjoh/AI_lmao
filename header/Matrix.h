@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <iomanip>
 #include <time.h>
 
@@ -17,6 +18,7 @@ struct Shape
     bool operator==(const Shape &rhs) {return m == rhs.m && n == rhs.n;}
 };
 
+
 class Matrix
 {
     private:
@@ -24,13 +26,15 @@ class Matrix
         float* data;
 
     public:
-        Matrix(Shape s, float fill = 0);
+        // Constructors
+        Matrix();
         Matrix(int m, int n, float fill = 0);
         Matrix(int m, int n, float * d);
-        Matrix();
+        Matrix(Shape s, float fill = 0);
         Matrix(const Matrix &other);
         ~Matrix();
 
+        // Operators
         Matrix operator+=(const Matrix &rhs);
         Matrix operator-=(Matrix rhs);
         Matrix operator- ();
@@ -38,22 +42,22 @@ class Matrix
         Matrix operator*= (const float &rhs);
         Matrix operator= (Matrix rhs);
         virtual float * operator[](int i);
+        friend ofstream & operator<<(ofstream & os, const Matrix & rhs);
 
-
+        // Member functions
         void print();
-        int size();
+        int size() const;
         float getVal(int i, int j) const;
         Shape shape() const;
-        int m() {return s.m;}
-        int n() {return s.n;}
+        int m() const {return s.m;}
+        int n() const {return s.n;}
         float absMax() const;
         Shape absMaxIndex();
-
         Matrix hadProd(const Matrix & lhs);
         Matrix T() const;
 };
 
-// Opperators and functions to use on Matrices
+// Free functions
 
 Matrix operator* (Matrix lhs, const Matrix &rhs);
 Matrix operator+ (Matrix lhs, const Matrix &rhs);

@@ -4,11 +4,17 @@
 using namespace std;
 
 
-Layer::Layer(int n, int m, Layer * last) : 
-    n{n}, m{m}, last{last}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m, -0.5, 0.5)} {}
+// Layer
+// 
+// A layer contains the activation, weights and biases for one layer in a deep 
+// neural network. The weight and biases is generated at random. If only one integer
+//  is given, a layer with just a activation matrix is created.
 
 Layer::Layer(int n) : 
     n{n}, m{0}, last{nullptr}, activation{n, 1} {}
+
+Layer::Layer(int n, int m, Layer * last) : 
+    n{n}, m{m}, last{last}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m, -0.5, 0.5)} {}
 
 Layer::Layer(const Layer & cpy) : Layer(cpy.n, cpy.m, cpy.next)
 {
@@ -31,6 +37,13 @@ Layer Layer::operator= (Layer rhs)
 }
 
 
+ofstream& operator<<(ofstream & os, const Layer & rhs)
+{
+    os << rhs.activation << rhs.weightedSum << rhs.biases << rhs.weights << "\n";
+    return os;
+}
+
+
 void Layer::updateLayer(Layer * former)
 {
     weightedSum = weights * former->activation + biases;
@@ -50,13 +63,17 @@ void Layer::printLayer()
 void Layer::printShape()
 {
     cout << "activation: " << setw(10)<< "weights:"<< setw(10) << "bias: " << endl;
-    cout << activation.m() << "x" << activation.n() << setw(10);
+    cout << to_string(activation.m()) + "x" + to_string(activation.n()) << setw(10);
     cout << weights.m() << "x" << weights.n() << setw(10);
     cout << biases.m() << "x" << biases.n() << setw(10) << endl;
 }
 
 
 // NeuralNet
+// 
+// A class that contains layers in a linked list. The class is constructed by first 
+// constructing a inputlayer, with only an activation matrix, and the list is then
+// constructed as specified by the L-array.
 
 NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, input{new Layer{L[0]}}
 {
@@ -107,8 +124,6 @@ void NeuralNet::printShape() const
     while(current != nullptr);
 }
 
-
-
 Matrix NeuralNet::activate(Matrix data)
 {
     input->setNeurons(data);
@@ -121,6 +136,18 @@ Matrix NeuralNet::activate(Matrix data)
     }
     while (current != nullptr);
     return output->a();
+}
+
+void NeuralNet::saveNet(string path)
+{
+    ofstream fil;
+    fil.open(path + ".ai");
+    Layer * current = input;
+    do{
+        fil << *current;
+        current = current->getNext();
+    } 
+    while(current != nullptr);
 }
 
 // Free functions
@@ -150,3 +177,4 @@ Matrix df(Matrix x)
     }
     return x;
 }
+

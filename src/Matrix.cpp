@@ -1,26 +1,22 @@
 #include "../header/Matrix.h"
 
+
+// Constructors
+// 
+// Different constructors for the Matrix class, as well as the destructor
+
+Matrix::Matrix() : Matrix(0, 0) {}
 Matrix::Matrix(int m, int n, float fill) : Matrix(Shape{m, n}, fill) {}
 Matrix::Matrix(int m, int n, float * d) : s{m, n}, data{new float[s.n * s.m]} 
 {
     if (n == 0 || m == 0){s.m = 0; s.n = 0;}
-    
-    for (int i = 0; i < s.m; i++)
-    {
-        for (int j = 0; j < s.n; j++)
-        {
-            data[i * s.n + j] = d[i * s.n + j];
-        }
-    }
+    for (int i = 0; i < size(); i++){data[i] = d[i];}
 }
-
-Matrix::Matrix() : Matrix(0, 0) {}
 Matrix::Matrix(Shape s, float fill) : s{s},  data{new float[s.n * s.m]}
 {
     if (s.n == 0 || s.m == 0){s.m = 0;s.n = 0;}
     for (int i = 0; i < size(); i++) {data[i] = fill;}
 }
-
 Matrix::Matrix(const Matrix &other) : s{other.s}, data{new float[s.n * s.m]}
 {
     if (s.n == 0 || s.m == 0){s.m = 0;s.n = 0;}
@@ -29,7 +25,10 @@ Matrix::Matrix(const Matrix &other) : s{other.s}, data{new float[s.n * s.m]}
 
 Matrix::~Matrix() {delete[] data;}
 
-float * Matrix::operator[](int i) {return &data[s.n * i];}
+
+// Operators
+// 
+// Operators for manipulating matrices
 
 Matrix Matrix::operator*=(const Matrix &rhs)
 {
@@ -68,7 +67,6 @@ Matrix Matrix::operator*=(const float &rhs)
     return *this;
 }
 
-
 Matrix Matrix::operator+= (const Matrix &rhs)
 {
     if (!(this->shape() == rhs.shape()))
@@ -105,6 +103,23 @@ Matrix Matrix::operator= (Matrix rhs)
     return *this;
 }
 
+float * Matrix::operator[](int i) {return &data[s.n * i];}
+
+ofstream& operator<<(ofstream & os, const Matrix & rhs)
+{
+    os << rhs.m() << " " << rhs.n() << "\t";
+    for (int i = 0; i < rhs.size(); i++)
+    {
+        os << rhs.data[i] << "\t";
+    }
+    os << "\n";
+    return os;
+}
+
+
+// Member functions
+// 
+// Member functions for the matrix class
 
 void Matrix::print()
 {
@@ -119,7 +134,7 @@ void Matrix::print()
     cout << endl;
 }
 
-int Matrix::size() {return s.m * s.n;}
+int Matrix::size() const {return s.m * s.n;}
 float Matrix::getVal(int i, int j) const {return data[j + s.n * i];}
 Shape Matrix::shape() const {return s;}
 
@@ -176,13 +191,17 @@ Matrix Matrix::T() const
 }
 
 
+// Free fucntions
+// 
+// Functions defined outside the Matrix class to use with matrices
+
+
 // Opperators to use on Matrices
 
 Matrix operator* (Matrix lhs, const Matrix &rhs) {return lhs *= rhs;}
 Matrix operator+ (Matrix lhs, const Matrix &rhs) {return lhs += rhs;}
 Matrix operator- (Matrix lhs, const Matrix &rhs) {return lhs -= rhs;}
 Matrix operator* (Matrix lhs, const float &rhs) {return lhs *= rhs;}
-
 
 
 // Helper functions for matrices

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <iomanip>
 #include <time.h>
 
@@ -55,6 +56,8 @@ class Matrix
         Shape absMaxIndex();
         Matrix hadProd(const Matrix & lhs);
         Matrix T() const;
+
+    friend Matrix matFromString(string str);
 };
 
 // Free functions
@@ -65,3 +68,5 @@ Matrix operator- (Matrix lhs, const Matrix &rhs);
 Matrix operator* (Matrix lhs, const float &rhs);
 
 Matrix rand(int M, int N, float min = 0, float max = 1);
+// String fromat: m n data, where data is tab separated
+Matrix matFromString(string str);

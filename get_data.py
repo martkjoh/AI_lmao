@@ -70,6 +70,8 @@ for file in files:
 
         data_dict[data_set + '_' + category] = parsed  # SAVE THE np ARRAY TO A CORRESPONDING KEY
 
+        os.remove(path + file)
+
 for data_set in data_sets:
         data = data_dict[data_set + "_" + catoegories[0]]
         n = 28

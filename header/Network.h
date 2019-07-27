@@ -17,7 +17,7 @@ class Layer
 
     public:
 
-        Layer(int n);
+        Layer(int n = 0);
         Layer(int n, int m, Layer * last = nullptr);
         Layer(const Layer & cpy);
 
@@ -39,6 +39,7 @@ class Layer
 
 
     friend class Del;
+    friend class NeuralNet;
 };
 
 
@@ -46,7 +47,7 @@ class Layer
 
 class NeuralNet
 {
-    private:
+    public:
         int * L;
         int l;
         
@@ -55,6 +56,7 @@ class NeuralNet
 
     public:
         NeuralNet(int * L, int l);
+        NeuralNet(string path = "net");
         ~NeuralNet();
 
         void printNet() const;

@@ -206,7 +206,6 @@ void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
 {
     float correct = 0;
     int n = x.size();
-    cout << n << endl;
     Matrix guess;
     Matrix answ;
     for (int i = 0; i < n; i++)

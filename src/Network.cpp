@@ -14,7 +14,9 @@ Layer::Layer(int n) :
     n{n}, m{0}, last{nullptr}, activation{n, 1} {}
 
 Layer::Layer(int n, int m, Layer * last) : 
-    n{n}, m{m}, last{last}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m, -0.5, 0.5)} {}
+    n{n}, m{m}, last{last}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, 
+    weights{rand(n, m, -0.5, 0.5)} 
+    {}
 
 Layer::Layer(const Layer & cpy) : Layer(cpy.n, cpy.m, cpy.next)
 {
@@ -36,13 +38,11 @@ Layer Layer::operator= (Layer rhs)
     return *this;
 }
 
-
 ofstream& operator<<(ofstream & os, const Layer & rhs)
 {
     os << rhs.activation << rhs.weightedSum << rhs.biases << rhs.weights << "\n";
     return os;
 }
-
 
 void Layer::updateLayer(Layer * former)
 {
@@ -64,8 +64,8 @@ void Layer::printShape()
 {
     cout << "activation: " << setw(10)<< "weights:"<< setw(10) << "bias: " << endl;
     cout << to_string(activation.m()) + "x" + to_string(activation.n()) << setw(10);
-    cout << weights.m() << "x" << weights.n() << setw(10);
-    cout << biases.m() << "x" << biases.n() << setw(10) << endl;
+    cout << to_string(weights.m()) + "x" + to_string(weights.n()) << setw(10);
+    cout << to_string(biases.m()) + "x" + to_string(biases.n()) << setw(10) << endl;
 }
 
 
@@ -88,6 +88,53 @@ NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, input{new Layer{L[0]}}
     output = current;
     output->setNext();
 }
+
+NeuralNet::NeuralNet(string path)
+{
+    ifstream fil;
+    fil.open(path + ".ai");
+
+    string str, tmp;
+    getline(fil, str);
+    l = stoi(str);
+    
+    getline(fil, str);
+    stringstream ss(str);
+    L = new int[l];
+
+    for (int i = 0; i < l; i++) 
+    {
+        ss >> tmp;
+        L[i] = stoi(tmp);
+    }
+
+    input = new Layer{L[0]};
+    Layer * last = input;
+    Layer * current = nullptr;
+    Layer * next = nullptr;
+    for (int i = 0; i < 5; i++) {getline(fil, str);}
+    for (int i = 1; i < l; i++)
+    {
+        Layer * current = new Layer;
+        getline(fil, str);
+        current->activation = matFromString(str);
+        getline(fil, str);
+        current->weightedSum = matFromString(str);
+        getline(fil, str);
+        current->biases = matFromString(str);
+        getline(fil, str);
+        current->weights = matFromString(str);
+        getline(fil, str);
+        current->n = current->w().n();
+        current->m = current->w().m();
+        current->last = last;
+        last->next = current;
+        last = current;
+    }
+    output = last;
+    output->next = nullptr;
+}
+
 
 NeuralNet::~NeuralNet()
 {
@@ -142,6 +189,9 @@ void NeuralNet::saveNet(string path)
 {
     ofstream fil;
     fil.open(path + ".ai");
+    fil << to_string(l) << "\n";
+    for (int i = 0; i < l; i++) {fil << to_string(L[i]) << "\t";}
+    fil << "\n";
     Layer * current = input;
     do{
         fil << *current;

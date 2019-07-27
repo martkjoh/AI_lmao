@@ -218,3 +218,21 @@ Matrix rand(int M, int N, float min, float max)
     }
     return A;
 }
+
+Matrix matFromString(string str)
+{
+    string tmp;
+    stringstream ss(str);
+    ss >> tmp;
+    int m = stoi(tmp);
+    ss >> tmp;
+    int n = stoi(tmp);
+    float data[m * n];
+    for (int i = 0; i < m * n; i++)
+    {
+        ss >> tmp;
+        data[i] = stof(tmp);
+    }
+    Matrix M(m, n, data);
+    return M;
+}

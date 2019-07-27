@@ -4,8 +4,11 @@
 using namespace std;
 
 
-Layer::Layer(int n, int m, Layer * next) : 
-    n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m, -0.5, 0.5)} {}
+Layer::Layer(int n, int m, Layer * last) : 
+    n{n}, m{m}, last{last}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m, -0.5, 0.5)} {}
+
+Layer::Layer(int n) : 
+    n{n}, m{0}, last{nullptr}, activation{n, 1} {}
 
 Layer::Layer(const Layer & cpy) : Layer(cpy.n, cpy.m, cpy.next)
 {
@@ -55,19 +58,18 @@ void Layer::printShape()
 
 // NeuralNet
 
-NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, output{new Layer{L[l - 1], L[l - 2]}}
+NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, input{new Layer{L[0]}}
 {
-    Layer * current = output;
+    Layer * current = input;
     Layer * next = nullptr;
-    for (int i = 1; i < l - 1; i++)
+    for (int i = 1; i < l; i++)
     {
-        next = new Layer{L[l - 1 - i], L[l - 2 - i], current};
-        current->setLast(next);
+        next = new Layer{L[i], L[i - 1], current};
+        current->setNext(next);
         current = next;
     }
-    input = new Layer{L[0], 0, current};
-    current->setLast(input);
-    input->setLast();
+    output = current;
+    output->setNext();
 }
 
 NeuralNet::~NeuralNet()

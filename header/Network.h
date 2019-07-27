@@ -18,7 +18,8 @@ class Layer
 
     public:
 
-        Layer(int n, int m, Layer * next = nullptr);
+        Layer(int n);
+        Layer(int n, int m, Layer * last = nullptr);
         Layer(const Layer & cpy);
 
         Layer operator= (Layer rhs);
@@ -27,7 +28,7 @@ class Layer
 
         Layer * getNext() const {return next;}
         Layer * getLast() const {return last;}
-        void setLast(Layer * last = nullptr) {this->last = last;}
+        void setNext(Layer * next = nullptr) {this->next = next;}
         int width() const {return n;}
         float getVal(int j) {return activation[j][0];}
         Matrix a() {return activation;}

@@ -1,4 +1,4 @@
-#include "../header/dataPrep.h"
+#include "../header/DataPrep.h"
 
 void imToMat(Image & im, Matrix * M)
 {
@@ -27,29 +27,42 @@ void matToIm(Image & im, Matrix * M)
 }
 
 
-void getData(vector<Matrix *> & x, vector<Matrix *> &y, int n)
+void loadData(Data & d, string path, int n)
 {
     Image pic;
     Matrix * M;
     Matrix * N;
+    cout << "Loading data from " << path << endl;
     for (int i = 0; i < n; i++)
     {
+        bool loaded = false;
         for (int j = 0; j < 10; j++)
         {
             try
             {
-                pic = Image("trainingSet/" + to_string(j) +"/img_" + to_string(i) + ".jpg");
+                pic = Image(path + to_string(j) +"/img_" + to_string(i) + ".png");
                 pic.quantizeColorSpace();
-                
                 M = new Matrix(pic.rows() * pic.columns(), 1);
                 imToMat(pic, M);
-                x.push_back(M);
+                d.x.push_back(M);
                 
                 N = new Matrix(10, 1);
                 (*N)[j][0] = 1.;
-                y.push_back(N);
+                d.y.push_back(N);
+                loaded = true;
             }
             catch (...) {}
         }
+
+        if (not loaded)
+            cout << "loading image " + to_string(i) + " failed." << endl;
     }
+}
+
+
+Data getData(string path, int n)
+{
+    Data d;
+    loadData(d, path, n);
+    return d;
 }

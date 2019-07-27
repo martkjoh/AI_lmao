@@ -1,31 +1,23 @@
 #include "header/BackProp.h"
-#include "header/dataPrep.h"
+#include "header/DataPrep.h"
 
 int main()
 {
     srand (time(NULL));
     
-    vector<Matrix *> x;
-    vector<Matrix *> y;
-    
-    int n = 10000;
-    int nTrain = (n * 9) / 10;
-    int m = 100;
-    getData(x, y, n);
-
-    auto itx = x.begin();
-    auto ity = y.begin();
-    vector<Matrix *> xTrain = vector<Matrix *>(x.begin()  + nTrain, x.end());
-    vector<Matrix *> yTrain = vector<Matrix *>(y.begin() + nTrain, y.end());
-    x = vector<Matrix *>(x.begin(), x.begin() + nTrain);
-    y = vector<Matrix *>(y.begin(), y.begin() + nTrain);
+    int nTest = 1e2;  // Max 1e4
+    int nTrain = 6e2; // Max 6e4
+    string trainPath = "data/train/";
+    string testPath = "data/test/";
+    Data testData = getData(testPath, nTest);
+    Data trainData = getData(trainPath, nTrain);
 
     int l = 4;
-    int L[l] = {784, 16, 16, 10};
+    int L[l] = {784, 20, 20, 10};
     NeuralNet N(L, l);
-
-    trainNN(N, 20, 10, xTrain, yTrain);
-    testNN(N, x, y);
+    N.printShape();
+    trainNN(N, 20, 10, trainData.x, trainData.y);
+    testNN(N, testData.x, testData.y);
 
     return 0;
 }

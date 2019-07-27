@@ -1,6 +1,6 @@
 CXX = g++
 
-EXECUTABLE = fil
+EXECUTABLE = AI_lmao
 
 SRCS = src/*.cpp *.cpp
 HEAD = header/*.h

@@ -1,22 +1,31 @@
 #include "../header/Matrix.h"
 
-Matrix::Matrix(int m, int n, float fill) : Matrix{Shape{m, n}, fill} {}
+Matrix::Matrix(int m, int n, float fill) : Matrix(Shape{m, n}, fill) {}
 Matrix::Matrix(int m, int n, float * d) : s{m, n}, data{new float[s.n * s.m]} 
 {
-    for (int i = 0; i < m; i++)
+    if (n == 0 || m == 0){s.m = 0; s.n = 0;}
+    
+    for (int i = 0; i < s.m; i++)
     {
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < s.n; j++)
         {
-            data[i * n + j] = d[i * n + j];
+            data[i * s.n + j] = d[i * s.n + j];
         }
     }
 }
 
 Matrix::Matrix() : Matrix(0, 0) {}
 Matrix::Matrix(Shape s, float fill) : s{s},  data{new float[s.n * s.m]}
-    {for (int i = 0; i < size(); i++) {data[i] = fill;}}
+{
+    if (s.n == 0 || s.m == 0){s.m = 0;s.n = 0;}
+    for (int i = 0; i < size(); i++) {data[i] = fill;}
+}
+
 Matrix::Matrix(const Matrix &other) : s{other.s}, data{new float[s.n * s.m]}
-    {for (int i = 0; i < size(); i++) {data[i] = other.data[i];}}
+{
+    if (s.n == 0 || s.m == 0){s.m = 0;s.n = 0;}
+    for (int i = 0; i < size(); i++) {data[i] = other.data[i];}
+}
 
 Matrix::~Matrix() {delete[] data;}
 
@@ -155,7 +164,7 @@ Matrix Matrix::hadProd(const Matrix & rhs)
 
 Matrix Matrix::T() const
 {
-    Matrix T{s.n, s.m};
+    Matrix T(s.n, s.m);
     for (int i = 0; i < s.m; i++)
     {
         for (int j = 0; j < s.n; j++)
@@ -180,7 +189,7 @@ Matrix operator* (Matrix lhs, const float &rhs) {return lhs *= rhs;}
 
 Matrix rand(int M, int N, float min, float max)
 {
-    Matrix A{M, N};
+    Matrix A(M, N);
     for (int i = 0; i < M; i++)
     {
         for (int j = 0; j < N; j++) 

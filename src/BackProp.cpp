@@ -2,8 +2,8 @@
 
 DelVec::DelVec(NeuralNet & net) : L{net.L}, l{net.l}
 {
-    dw.push_back(new Matrix(L[0], L[0]));
-    db.push_back(new Matrix(L[0], 1));
+    dw.push_back(new Matrix(0, 0));
+    db.push_back(new Matrix(0, 0));
     for (int i = 1; i < l; i++)
     {
         dw.push_back(new Matrix(L[i], L[i - 1]));
@@ -16,7 +16,10 @@ DelVec::DelVec(const DelVec & rhs)
     l = rhs.l;
     for (int i = 0; i < l; i++)
         L[i] = rhs.L[i];
-    for (int i = 0; i < l; i++)
+
+    dw.push_back(new Matrix(0, 0));
+    db.push_back(new Matrix(0, 0));
+    for (int i = 1; i < l; i++)
     {
         dw.push_back(new Matrix(L[i], L[i - 1]));
         db.push_back(new Matrix(L[i], 1));
@@ -152,7 +155,6 @@ void Del::adjustWeights(NeuralNet & net)
     }
 }
 
-// TODO: Make actually stochasic (picking of vector slices)
 void Del::SGD(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
 {
     int n = x.size();
@@ -204,6 +206,7 @@ void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
 {
     float correct = 0;
     int n = x.size();
+    cout << n << endl;
     Matrix guess;
     Matrix answ;
     for (int i = 0; i < n; i++)

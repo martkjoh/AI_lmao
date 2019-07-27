@@ -1,5 +1,6 @@
 #include "Matrix.h"
 
+// TODO: Make sublayer without weights an biases
 class Layer
 {
     protected:
@@ -18,7 +19,6 @@ class Layer
     public:
 
         Layer(int n, int m, Layer * next = nullptr);
-        Layer(int n, int m, Layer * next, bool in);
         Layer(const Layer & cpy);
 
         Layer operator= (Layer rhs);
@@ -34,12 +34,15 @@ class Layer
         Matrix z() {return weightedSum;}
         Matrix w() {return weights;}
         void printLayer();
+        void printShape();
 
         void setNeurons(Matrix data){activation = data;}
 
     friend class Del;
 };
 
+
+// Neural Net
 
 class NeuralNet
 {
@@ -55,6 +58,7 @@ class NeuralNet
         ~NeuralNet();
 
         void printNet() const;
+        void printShape() const;
         Matrix activate(Matrix data);
         Matrix getOutput() {return output->a();}
 

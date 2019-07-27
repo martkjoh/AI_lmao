@@ -7,10 +7,7 @@ using namespace std;
 Layer::Layer(int n, int m, Layer * next) : 
     n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{rand(n, 1)}, weights{rand(n, m, -0.5, 0.5)} {}
 
-Layer::Layer(int n, int m, Layer * next, bool in) : 
-    n{n}, m{m}, next{next}, activation{n, 1}, weightedSum{n, 1}, biases{n, 1}, weights{n, m} {}
-
-Layer::Layer(const Layer & cpy) : Layer(cpy.n, cpy.m, cpy.next, true)
+Layer::Layer(const Layer & cpy) : Layer(cpy.n, cpy.m, cpy.next)
 {
     this->weightedSum = cpy.weightedSum;
     this->activation = cpy.activation;
@@ -39,12 +36,20 @@ void Layer::updateLayer(Layer * former)
 
 void Layer::printLayer()
 {
-    cout << "weights:" << endl;
-    weights.print();
     cout << "activation" << endl;
     activation.print();
+    cout << "weights:" << endl;
+    weights.print();
     cout << "bias" << endl;
     biases.print();
+}
+
+void Layer::printShape()
+{
+    cout << "activation: " << setw(10)<< "weights:"<< setw(10) << "bias: " << endl;
+    cout << activation.m() << "x" << activation.n() << setw(10);
+    cout << weights.m() << "x" << weights.n() << setw(10);
+    cout << biases.m() << "x" << biases.n() << setw(10) << endl;
 }
 
 
@@ -60,7 +65,7 @@ NeuralNet::NeuralNet(int * L, int l) : L{L}, l{l}, output{new Layer{L[l - 1], L[
         current->setLast(next);
         current = next;
     }
-    input = new Layer{L[0], L[0], current, true};
+    input = new Layer{L[0], 0, current};
     current->setLast(input);
     input->setLast();
 }
@@ -88,6 +93,18 @@ void NeuralNet::printNet() const
     } 
     while(current != nullptr);
 }
+
+void NeuralNet::printShape() const
+{
+    Layer * current = input;
+    do{
+        current->printShape();
+        cout << endl << endl;
+        current = current->getNext();
+    } 
+    while(current != nullptr);
+}
+
 
 
 Matrix NeuralNet::activate(Matrix data)

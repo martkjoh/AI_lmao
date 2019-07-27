@@ -4,17 +4,18 @@
 
 // A calss to hold the gradient of a cost function
 
+// TODO: rename the classes
 class DelVec
 {
     private:
         vector<Matrix *> dw;
+        vector<Matrix *> db;
         int l;
         int * L;
 
         Matrix getVal(int i) const;
 
     public:
-        vector<Matrix *> db;
 
 
         DelVec(NeuralNet & net);
@@ -49,10 +50,10 @@ class Del
         void adjustWeights(NeuralNet & net);
         float test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
 
-
     public:
         Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
         
+        // TODO: Make actually stochasic (picking of vector slices)
         void SGD(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m);
         void reset() {delC *= 0;}
         void printDims() {delC.printDims();}
@@ -68,3 +69,8 @@ class Del
 void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y);
 
 void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
+
+
+// TODO: Function that saves the weights an biases
+
+// TODO: Funciton that guesses number based on selected image file

@@ -63,6 +63,7 @@ class NeuralNet
         void printShape() const;
         Matrix activate(Matrix data);
         Matrix getOutput() {return output->a();}
+        // TODO: include only the weights an biases in .ai, and remove first layer
         void saveNet(string path = "net");
 
     friend class DelVec; 

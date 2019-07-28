@@ -4,22 +4,39 @@
 int main()
 {
     srand (time(NULL));
+
+    // Parameters for the neural network
+    // 
+    // Total number of pictures loaded 
+    int N = 5e3; // Max 6e4
+    // Number of pictures used for training
+    int n = 4e3;
+    // Number of pictures used for testing
+    int m = 1e3;
+    if (N < n + m)
+    {
+        cout << "Invalid data sizes" << endl;
+        throw 1;
+    }
+    // Number of layers in the network
+    int l = 4;
+    // Numbers of nodes in each layer
+    int L[l] = {784, 16, 16, 10};
+
+    // NeuralNet net(L, l);
+    NeuralNet net;
+
+    Data d = getData(N);
+    Data testData = slice(d, 0, m);
     
-    int nTest = 1e2;  // Max 1e4
-    // int nTrain = 6e2; // Max 6e4
-    string testPath = "data/test/";
-    // string trainPath = "data/train/";
-    Data testData = getData(testPath, nTest);
-    // Data trainData = getData(trainPath, nTrain);
+    d = slice(d, m, N);
+    shuffleData(d);
+    d = slice(d, 0, n);
 
-    // int l = 4;
-    // int L[l] = {784, 20, 20, 10};
-    // NeuralNet N(L, l);
-    // trainNN(N, 20, 10, trainData.x, trainData.y);
-    // N.saveNet();
-
-    NeuralNet N("test");
-    testNN(N, testData.x, testData.y);
+    trainNN(net, 10, 10, d.x, d.y);
+    net.saveNet();
+    
+    testNN(net, testData.x, testData.y);
 
     return 0;
 }

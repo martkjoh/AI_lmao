@@ -198,7 +198,7 @@ void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *>
     for (int i = 0; i < n; i++)
     {
         delC.SGD(net, x, y, m);
-        cout << (100 * i) / n << "%" << endl;
+        cout << (100 * (i + 1)) / n << "%" << endl;
     }
 }
 

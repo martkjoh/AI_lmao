@@ -16,4 +16,8 @@ void matToIm(Image & im, Matrix * M);
 
 void loadData(Data & d, string path, int n);
 
-Data getData(string path, int n);
+Data getData(int N);
+
+void shuffleData(Data & d);
+
+Data slice(Data d, int n, int m);

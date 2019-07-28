@@ -60,9 +60,31 @@ void loadData(Data & d, string path, int n)
 }
 
 
-Data getData(string path, int n)
+Data getData(int N)
 {
     Data d;
-    loadData(d, path, n);
+    int n = 5e3; // Max 6e4
+    string path = "data/train/";
+    loadData(d, path, N);
+    return d;
+}
+
+
+void shuffleData(Data & d)
+{
+    int n = d.x.size();
+    int newIndex;
+    for (int i = 0; i < n; i++)
+    {
+        newIndex = rand() % (n - i);
+        d.x[i] = d.x[newIndex];
+        d.y[i] = d.y[newIndex];
+    }
+}
+
+Data slice(Data d, int n, int m)
+{
+    d.x = vector<Matrix *>(d.x.begin() + n, d.x.begin() + m);
+    d.y = vector<Matrix *>(d.y.begin() + n, d.y.begin() + m);
     return d;
 }

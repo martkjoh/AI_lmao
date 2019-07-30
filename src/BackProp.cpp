@@ -161,6 +161,7 @@ void Del::SGD(NeuralNet & net, Data d, int m)
     for (int i = 0; i < n / m; i++)
     {
         reset();
+        shuffleData(d);
         for (int i = 0; i < 10; i++) 
         {        
             avBackProp(net, slice(d, i * m, (i + 1) * m));
@@ -220,4 +221,16 @@ Data slice(Data d, int n, int m)
     d.x = vector<Matrix *>(d.x.begin() + n, d.x.begin() + m);
     d.y = vector<Matrix *>(d.y.begin() + n, d.y.begin() + m);
     return d;
+}
+
+void shuffleData(Data & d)
+{
+    int n = d.x.size();
+    int newIndex;
+    for (int i = 0; i < n; i++)
+    {
+        newIndex = rand() % (n - i);
+        d.x[i] = d.x[newIndex];
+        d.y[i] = d.y[newIndex];
+    }
 }

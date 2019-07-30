@@ -60,7 +60,6 @@ class Del
     public:
         Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
         
-        // TODO: Make actually stochasic (picking of vector slices)
         void SGD(NeuralNet & net, Data d, int m);
         void reset() {delC *= 0;}
         void printDims() {delC.printDims();}
@@ -78,5 +77,7 @@ void train(NeuralNet & net, int n, int m, Data d);
 void test(NeuralNet & net, Data d);
 
 Data slice(Data d, int n, int m);
+
+void shuffleData(Data & d);
 
 // TODO: Funciton that guesses number based on selected image file

@@ -79,14 +79,3 @@ Data getData(DataType DT)
     return d;
 }
 
-void shuffleData(Data & d)
-{
-    int n = d.x.size();
-    int newIndex;
-    for (int i = 0; i < n; i++)
-    {
-        newIndex = rand() % (n - i);
-        d.x[i] = d.x[newIndex];
-        d.y[i] = d.y[newIndex];
-    }
-}

@@ -25,5 +25,3 @@ void loadData(Data & d, string path, int n);
 
 Data getData(DataType DT = DataType::TRAIN);
 
-void shuffleData(Data & d);
-

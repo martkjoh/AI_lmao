@@ -11,9 +11,8 @@ void trainNN(string name, int timesTrainig, int batchNum)
 {
     NeuralNet net(name);
     Data d = getData();
-    shuffleData(d);
 
-    train(net, timesTrainig, batchNum, d.x, d.y);
+    train(net, d, timesTrainig, batchNum);
 
     net.saveNet(name);
 }

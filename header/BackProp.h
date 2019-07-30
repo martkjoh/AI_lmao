@@ -72,7 +72,7 @@ class Del
 // 
 // Fere functions to work with the classes aboce
 
-void train(NeuralNet & net, int n, int m, Data d);
+void train(NeuralNet & net, Data d, int n, int m);
 
 void test(NeuralNet & net, Data d);
 

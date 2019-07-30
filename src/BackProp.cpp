@@ -188,7 +188,7 @@ float Del::test(NeuralNet & net, Data d)
 
 // n is the number of time to train the network,
 // m is the number of baches the training data is seperated into
-void train(NeuralNet & net, int n, int m, Data d)
+void train(NeuralNet & net, Data d, int n, int m)
 {
     cout << "Training neural network" << endl;
     Del delC(net);

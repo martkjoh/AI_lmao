@@ -17,3 +17,7 @@ void makeNN(string name);
 void trainNN(string nameint, int timesTrainig = 1, int batchNum = 10);
 
 void testNN(string name);
+
+void guessNubmer(string name, string path);
+
+void Interface(int argc, char ** argv);

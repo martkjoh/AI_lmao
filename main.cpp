@@ -1,13 +1,7 @@
 #include "header/Interface.h"
 
-int main()
+int main(int argc, char ** argv)
 {
-    srand (time(NULL));
-
-    string name = "test";
-    makeNN(name);
-    trainNN(name);
-    testNN(name);
-
+    Interface(argc, argv);   
     return 0;
 }

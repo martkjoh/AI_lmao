@@ -43,6 +43,7 @@ class Matrix
         Matrix operator*= (const float &rhs);
         Matrix operator= (Matrix rhs);
         virtual float * operator[](int i);
+        
         friend ofstream & operator<<(ofstream & os, const Matrix & rhs);
 
         // Member functions

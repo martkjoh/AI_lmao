@@ -1,5 +1,6 @@
 #include "../header/DataPrep.h"
 
+
 void imToMat(Image & im, Matrix * M)
 {
     ColorGray c;
@@ -28,7 +29,7 @@ void matToIm(Image & im, Matrix * M)
 
 void loadData(Data & d, string path, int n)
 {
-    Image pic;
+    Image im;
     Matrix * M;
     Matrix * N;
     cout << "Loading data from " << path << endl;
@@ -39,10 +40,10 @@ void loadData(Data & d, string path, int n)
         {
             try
             {
-                pic = Image(path + to_string(j) +"/img_" + to_string(i) + ".png");
-                pic.quantizeColorSpace();
-                M = new Matrix(pic.rows() * pic.columns(), 1);
-                imToMat(pic, M);
+                im = Image(path + to_string(j) +"/img_" + to_string(i) + ".png");
+                im.quantizeColorSpace();
+                M = new Matrix(im.rows() * im.columns(), 1);
+                imToMat(im, M);
                 d.x.push_back(M);
                 
                 N = new Matrix(10, 1);
@@ -64,12 +65,12 @@ Data getData(DataType DT)
     int n;
     string path;
 
-    if (DT = DataType::TRAIN)
+    if (DT == DataType::TRAIN)
     {    
         n = TRAING_SIZE;
         path = "data/train/";
     }
-    else if (DT = DataType::TEST)
+    else if (DT == DataType::TEST)
     {
         n = TESTING_SIZE; 
         path = "data/test/";
@@ -78,4 +79,3 @@ Data getData(DataType DT)
     loadData(d, path, n);
     return d;
 }
-

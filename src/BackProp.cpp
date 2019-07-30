@@ -1,5 +1,6 @@
 #include "../header/BackProp.h"
 
+
 DelVec::DelVec(NeuralNet & net) : L{net.L}, l{net.l}
 {
     dw.push_back(new Matrix(0, 0));
@@ -44,7 +45,6 @@ Matrix DelVec::getVal(int i) const
     else
         return * db[i - l];
 }     
-
 
 Matrix * DelVec::operator[](int i) 
 {
@@ -95,24 +95,11 @@ void DelVec::printDims()
 
 // Class Del
 
-float Del::C(Matrix a, Matrix y)
-{
-    Matrix d = a - y;
-    return (d.T() * d)[0][0] / 2.;
-}
-
-Matrix Del::dC(Matrix a, Matrix y)
-{
-    Matrix d = a - y;
-    return d;
-}
-
-
 void Del::backProp(NeuralNet & net, Matrix * y, DelVec & del)
 {
     Layer * current(net.output);    // equivalent to index i
     Layer * next;                   // equivalent to index i + 1
-    *del[l - 1 + l] = dC(current->a(), *y).hadProd(df(current->z()));
+    *del[l - 1 + l] = net.dC(current->a(), *y).hadProd(df(current->z()));
     for (int i = l - 2 + l; i > l; i--)
     {
         next = current;
@@ -120,18 +107,18 @@ void Del::backProp(NeuralNet & net, Matrix * y, DelVec & del)
         *del[i] = df(current->z()).hadProd(next->w().T() * *del[i + 1]);
     }
 
+    // TODO: This can be done in the loop above
     current = net.input;
     for (int i = 1; i < l; i++)
     {
         *del[i] = (*del[i + l]) * current->a().T();
         current = current->getNext();
     }
-
 }
 
 void Del::avBackProp(NeuralNet & net, Data d)
 {
-    int n = x.size();
+    int n = d.x.size();
     DelVec del{net};
     for (int i = 0; i < n; i++)
     {
@@ -177,7 +164,7 @@ float Del::test(NeuralNet & net, Data d)
     for (int i = 0; i < n; i++)
     {
         net.activate(*d.x[i]);
-        s += C(net.getOutput(), *d.y[i]);
+        s += net.sumC(net.getOutput(), *d.y[i]);
     }
     return s / n;
 }

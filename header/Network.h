@@ -37,7 +37,6 @@ class Layer
         void printShape();
         void setNeurons(Matrix data){activation = data;}
 
-
     friend class Del;
     friend class NeuralNet;
 };
@@ -58,6 +57,10 @@ class NeuralNet
         NeuralNet(int * L, int l);
         NeuralNet(string path = "net");
         ~NeuralNet();
+
+        float sumC(Matrix a, Matrix y);
+        Matrix C(Matrix a, Matrix y);
+        Matrix dC(Matrix a, Matrix y);
 
         void printNet() const;
         void printShape() const;

@@ -16,7 +16,6 @@ $(OBJS): $(SRCS) $(HEAD)
 
 clean:
 	$(RM) $(OBJS)
-	$(RM) $(EXECUTABLE)
 
 run: $(EXECUTABLE)
 	./$(EXECUTABLE)

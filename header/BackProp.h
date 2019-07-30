@@ -20,23 +20,19 @@ class DelVec
         int l;
         int * L;
 
-        Matrix getVal(int i) const;
-
     public:
-
-
         DelVec(NeuralNet & net);
         DelVec(const DelVec & rhs);
         ~DelVec();
 
-        Matrix * operator[](int i);
-        // Returning DelVec causes segfault
+        //? Returning DelVec causes segfault
         void operator+= (const DelVec & rhs);
         void operator*= (const float & rhs);
         void operator= (DelVec rhs);
-
+        Matrix * operator[](int i);
 
         void printDims();
+        Matrix getVal(int i) const;
 
     friend class Del;
 };
@@ -48,9 +44,6 @@ class Del
 
         int * L;
         int l;
-
-        float C(Matrix a, Matrix y);
-        Matrix dC(Matrix a, Matrix y);
 
         void avBackProp(NeuralNet & net, Data d);
         void backProp(NeuralNet & net, Matrix * y, DelVec & del);
@@ -79,5 +72,3 @@ void test(NeuralNet & net, Data d);
 Data slice(Data d, int n, int m);
 
 void shuffleData(Data & d);
-
-// TODO: Funciton that guesses number based on selected image file

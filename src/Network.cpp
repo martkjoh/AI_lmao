@@ -135,7 +135,6 @@ NeuralNet::NeuralNet(string path)
     output->next = nullptr;
 }
 
-
 NeuralNet::~NeuralNet()
 {
     Layer * current = input;
@@ -147,6 +146,24 @@ NeuralNet::~NeuralNet()
     }
     while (next != nullptr);
     delete current;
+}
+
+float NeuralNet::sumC(Matrix a, Matrix y)
+{
+    Matrix d = a - y;
+    return (d.T() * d)[0][0] / 2.;
+}
+
+Matrix NeuralNet::C(Matrix a, Matrix y)
+{
+    Matrix d = a - y;
+    return d.hadProd(d) * (1 / 2.);
+}
+
+Matrix NeuralNet::dC(Matrix a, Matrix y)
+{
+    Matrix d = a - y;
+    return d;
 }
 
 void NeuralNet::printNet() const
@@ -190,6 +207,7 @@ void NeuralNet::saveNet(string path)
     ofstream fil;
     fil.open(path + ".ai");
     fil << to_string(l) << "\n";
+    
     for (int i = 0; i < l; i++) {fil << to_string(L[i]) << "\t";}
     fil << "\n";
     Layer * current = input;
@@ -199,6 +217,7 @@ void NeuralNet::saveNet(string path)
     } 
     while(current != nullptr);
 }
+
 
 // Free functions
 //
@@ -227,4 +246,3 @@ Matrix df(Matrix x)
     }
     return x;
 }
-

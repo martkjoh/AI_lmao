@@ -80,9 +80,8 @@ for file in files:
 
 print("Saving prictures:")
 for data_set in data_sets:
-    print("\t Saving data_set + "_" + catoegories[0]")
+    print("\t Saving " + data_set  + "_" + catoegories[0])
     data = data_dict[data_set + "_" + catoegories[0]]
-    # np.random.shuffle(data)
     n = 28
     
     checkAndMakeDir(path + data_set)

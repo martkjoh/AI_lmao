@@ -90,10 +90,3 @@ void shuffleData(Data & d)
         d.y[i] = d.y[newIndex];
     }
 }
-
-Data slice(Data d, int n, int m)
-{
-    d.x = vector<Matrix *>(d.x.begin() + n, d.x.begin() + m);
-    d.y = vector<Matrix *>(d.y.begin() + n, d.y.begin() + m);
-    return d;
-}

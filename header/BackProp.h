@@ -3,6 +3,11 @@
 #include "Network.h"
 #include <vector>
 
+struct Data
+{
+    vector<Matrix *> x;
+    vector<Matrix *> y;
+};
 
 // A calss to hold the gradient of a cost function
 
@@ -47,16 +52,16 @@ class Del
         float C(Matrix a, Matrix y);
         Matrix dC(Matrix a, Matrix y);
 
-        void avBackProp(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
+        void avBackProp(NeuralNet & net, Data d);
         void backProp(NeuralNet & net, Matrix * y, DelVec & del);
         void adjustWeights(NeuralNet & net);
-        float test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
+        float test(NeuralNet & net, Data d);
 
     public:
         Del(NeuralNet & net) : delC{net}, L{net.L}, l{net.l} {}
         
         // TODO: Make actually stochasic (picking of vector slices)
-        void SGD(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m);
+        void SGD(NeuralNet & net, Data d, int m);
         void reset() {delC *= 0;}
         void printDims() {delC.printDims();}
 
@@ -68,8 +73,10 @@ class Del
 // 
 // Fere functions to work with the classes aboce
 
-void train(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y);
+void train(NeuralNet & net, int n, int m, Data d);
 
-void test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
+void test(NeuralNet & net, Data d);
+
+Data slice(Data d, int n, int m);
 
 // TODO: Funciton that guesses number based on selected image file

@@ -129,14 +129,14 @@ void Del::backProp(NeuralNet & net, Matrix * y, DelVec & del)
 
 }
 
-void Del::avBackProp(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
+void Del::avBackProp(NeuralNet & net, Data d)
 {
     int n = x.size();
     DelVec del{net};
     for (int i = 0; i < n; i++)
     {
-        net.activate(*x[i]);
-        backProp(net, y[i], del);
+        net.activate(*(d.x[i]));
+        backProp(net, (d.y[i]), del);
         delC += del;
         del *= 0;
     }
@@ -155,32 +155,28 @@ void Del::adjustWeights(NeuralNet & net)
     }
 }
 
-void Del::SGD(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y, int m)
+void Del::SGD(NeuralNet & net, Data d, int m)
 {
-    int n = x.size();
-    auto xIt = x.begin();
-    auto yIt = y.begin();
+    int n = d.x.size();
     for (int i = 0; i < n / m; i++)
     {
         reset();
-        vector<Matrix *> xSlice = vector<Matrix *>(xIt + i * m, xIt + (i + 1) * m - 1);  
-        vector<Matrix *> ySlice = vector<Matrix *>(yIt + i * m, yIt + (i + 1) * m - 1);
         for (int i = 0; i < 10; i++) 
         {        
-            avBackProp(net, xSlice, ySlice);
+            avBackProp(net, slice(d, i * m, (i + 1) * m));
             adjustWeights(net);
         }
     }
 }
 
-float Del::test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
+float Del::test(NeuralNet & net, Data d)
 {
-    int n = x.size();
+    int n = d.x.size();
     float s = 0;
     for (int i = 0; i < n; i++)
     {
-        net.activate(*x[i]);
-        s += C(net.getOutput(), *y[i]);
+        net.activate(*d.x[i]);
+        s += C(net.getOutput(), *d.y[i]);
     }
     return s / n;
 }
@@ -191,30 +187,37 @@ float Del::test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
 
 // n is the number of time to train the network,
 // m is the number of baches the training data is seperated into
-void train(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y)
+void train(NeuralNet & net, int n, int m, Data d)
 {
     cout << "Training neural network" << endl;
     Del delC(net);
     for (int i = 0; i < n; i++)
     {
-        delC.SGD(net, x, y, m);
+        delC.SGD(net, d, m);
         cout << (100 * (i + 1)) / n << "%" << endl;
     }
 }
 
-void test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
+void test(NeuralNet & net, Data d)
 {
     float correct = 0;
-    int n = x.size();
+    int n = d.x.size();
     Matrix guess;
     Matrix answ;
     for (int i = 0; i < n; i++)
     {
-        answ = *y[i];
-        net.activate(*x[i]);
+        answ = *d.y[i];
+        net.activate(*d.x[i]);
         guess = net.getOutput();
         if (answ.absMaxIndex() == guess.absMaxIndex()) 
             correct += 1;
     }
     cout << "AI_lmao gjettet " << 100 * correct / n << "% riktig" << endl;
+}
+
+Data slice(Data d, int n, int m)
+{
+    d.x = vector<Matrix *>(d.x.begin() + n, d.x.begin() + m);
+    d.y = vector<Matrix *>(d.y.begin() + n, d.y.begin() + m);
+    return d;
 }

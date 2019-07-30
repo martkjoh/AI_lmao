@@ -26,7 +26,6 @@ void matToIm(Image & im, Matrix * M)
     }
 }
 
-
 void loadData(Data & d, string path, int n)
 {
     Image pic;
@@ -59,16 +58,26 @@ void loadData(Data & d, string path, int n)
     }
 }
 
-
-Data getData(int N)
+Data getData(DataType DT)
 {
     Data d;
-    int n = 5e3; // Max 6e4
-    string path = "data/train/";
-    loadData(d, path, N);
+    int n;
+    string path;
+
+    if (DT = DataType::TRAIN)
+    {    
+        n = TRAING_SIZE;
+        path = "data/train/";
+    }
+    else if (DT = DataType::TEST)
+    {
+        n = TESTING_SIZE; 
+        path = "data/test/";
+    }
+
+    loadData(d, path, n);
     return d;
 }
-
 
 void shuffleData(Data & d)
 {

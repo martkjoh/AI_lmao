@@ -191,7 +191,7 @@ float Del::test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
 
 // n is the number of time to train the network,
 // m is the number of baches the training data is seperated into
-void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y)
+void train(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y)
 {
     cout << "Training neural network" << endl;
     Del delC(net);
@@ -202,7 +202,7 @@ void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *>
     }
 }
 
-void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
+void test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y)
 {
     float correct = 0;
     int n = x.size();

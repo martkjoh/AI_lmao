@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Network.h"
 #include <vector>
 
@@ -66,9 +68,8 @@ class Del
 // 
 // Fere functions to work with the classes aboce
 
-void trainNN(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y);
+void train(NeuralNet & net, int n, int m, vector<Matrix *> x, vector<Matrix *> y);
 
-void testNN(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
-
+void test(NeuralNet & net, vector<Matrix *> x, vector<Matrix *> y);
 
 // TODO: Funciton that guesses number based on selected image file
